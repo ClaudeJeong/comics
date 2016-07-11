@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import mypkg.model.Member;
 import mypkg.model.MemberDao;
+import mypkg.util.Paging;
 
 public class MemberListController implements SuperController {
 
@@ -17,8 +18,28 @@ public class MemberListController implements SuperController {
 	public void doProcess(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		MemberDao mdao = new MemberDao();
-		List<Member> lists = mdao.SelectDataList();
+		
+		String pageNumber = request.getParameter("pageNumber");
+		String pageSize = request.getParameter("pageSize");
+		int totalCount = 54;
+		
+		String contextPath = request.getContextPath();
+		String myurl = contextPath + "/comics?command=MemberListResult";
+		String mode = null;
+		String keyword = null;
+		
+		Paging pageInfo = new Paging(
+										pageNumber, 
+										pageSize, 
+										totalCount, 
+										myurl, 
+										mode, 
+										keyword );
+		
+		List<Member> lists = mdao.SelectDataList(pageInfo.getBeginRow(), pageInfo.getEndRow());
 		request.setAttribute("lists", lists);
+		request.setAttribute("pagingHtml", pageInfo.getPagingHtml());
+		request.setAttribute("pagingStatus", pageInfo.getPagingStatus());
 		
 		String gotoPage = "/member/MemberListResult.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(gotoPage);

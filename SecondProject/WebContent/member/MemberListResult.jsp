@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@include file="./../common/top.jsp"%>
+<%@ include file="./../common/top.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	int meoffset = 2;
 	int myset = 12 - (myoffset * 2);
@@ -10,6 +11,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원 정보 보기</title>
+
 </head>
 <body>
 	<div
@@ -21,6 +23,27 @@
 			</div>
 	<table class="table table-condensed table-hover">
 		<thead>
+		<tr>
+					<td colspan="10" align="center">
+						<form class="form-inline" role="form" name="myform" action="<%=contextPath%>/List.bo" method="get">
+							<div class="form-group">
+								<select class="form-control" name="mode" id="mode">
+									<option value="-" selected="selected">-- 선택하세요---------
+									<option value="subject">아이디
+									<option value="content">이름									
+								</select>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control btn-xs" name="keyword"
+									id="keyword" placeholder="검색 키워드">
+							</div>
+							<button class="btn btn-default btn-warning" type="submit" onclick="search();">검색</button>
+							<button class="btn btn-default btn-warning" type="button" onclick="searchAll();">전체 검색</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<p class="form-control-static">${requestScope.pagingStatus}</p>
+						</form>
+					</td>
+				</tr>
 			<tr>
 				<td>아이디</td>
 				<td>이름</td>
@@ -48,6 +71,9 @@
 		</c:forEach>
 		</tbody>
 	</table>
+		<div align="center">
+			<footer>${requestScope.pagingHtml}</footer>
+		</div>	
 		</div>
 	</div>
 </body>

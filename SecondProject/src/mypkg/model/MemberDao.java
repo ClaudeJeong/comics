@@ -233,4 +233,64 @@ public class MemberDao extends SuperDao {
 
 		return bean;
 	}
-}
+
+	public List<Member> SelectDataList(int beginRow, int endRow) {
+		List<Member> lists = new ArrayList<Member>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = " select id, password, name, nickname, email1, email2, birth, gender,";
+		sql += " phone1, phone2, phone3, zipcode, address1, address2, registedate, ranking";
+		sql += " from (";
+		sql += " select id, password, name, nickname, email1, email2, birth, gender,";
+		sql += " phone1, phone2, phone3, zipcode, address1, address2, registedate, rank() over(order by id asc) as ranking";
+		sql += " from members)";
+		sql += " where ranking between ? and ?";
+		
+		if (conn == null) {
+			super.conn = super.getConnection();
+		}
+		try {
+			pstmt = super.conn.prepareStatement(sql);
+			pstmt.setInt(1, beginRow);
+			pstmt.setInt(2, endRow);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Member bean = new Member();
+				bean.setAddress1(rs.getString("address1"));
+				bean.setAddress2(rs.getString("address2"));
+				bean.setBirth(String.valueOf(rs.getDate("birth")));
+				bean.setEmail1(rs.getString("email1"));
+				bean.setEmail2(rs.getString("email2"));
+				bean.setGender(rs.getString("gender"));
+				bean.setId(rs.getString("id"));
+				bean.setName(rs.getString("name"));
+				bean.setNickname(rs.getString("nickname"));
+				bean.setPassword(rs.getString("password"));
+				bean.setPhone1(rs.getString("phone1"));
+				bean.setPhone2(rs.getString("phone2"));
+				bean.setPhone3(rs.getString("phone3"));
+				bean.setRegDate(String.valueOf(rs.getDate("registedate")));
+				bean.setZipCode(rs.getString("zipcode"));
+
+				lists.add(bean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				super.closeConnection();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return lists;
+	}
+	}
+

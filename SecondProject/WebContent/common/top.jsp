@@ -43,6 +43,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script   
+	src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js">
+</script>	
 </head>
 <body>
 	<div class="container row col-sm-offset-<%=myoffset%> col-sm-<%=mygrid%>"
