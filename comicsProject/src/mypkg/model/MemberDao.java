@@ -202,4 +202,101 @@ public class MemberDao extends SuperDao {
 		}
 		return check;
 	}
+
+	public int selectTotalCount(String mode, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = " select count(*) as cnt from members ";
+		if( mode.equals("all") == false ){
+			sql+= " where " + mode + " like '" + keyword + "'";
+		}
+		int cnt = 0;
+		try {
+			if (this.conn == null) {
+				this.conn = this.getConn();
+			}
+			pstmt = this.conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				cnt = rs.getInt("cnt");
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {pstmt.close();}
+				if ( rs != null) { rs.close();}
+				this.closeConn();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return cnt;
+
+	}
+
+	public List<Member> SelectDataList(int beginRow, int endRow, String mode, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		String sql = "select id, password, name, nickname, email1, email2, birth, gender, phone1, phone2, phone3, zipcode, address1, address2, regdate, ranking ";
+		sql += " from ";
+		sql += " ( ";
+		sql += " select id, password, name, nickname, email1, email2, birth, gender, phone1, phone2, phone3, zipcode, address1, address2, regdate, rank() over( order by id asc ) as ranking ";
+		sql += " from members ";
+		
+		if( mode.equals("all") == false ){
+			sql += " where lower(" + mode + ") like lower('" + keyword + "')"; 
+		}
+		sql += " ) ";
+		sql += " where ranking between ? and ? ";
+		List<Member> lists = new ArrayList<Member>();
+		try {
+			if (this.conn == null) {
+				this.conn = this.getConn();
+			}
+			pstmt = this.conn.prepareStatement(sql);
+			pstmt.setInt(1, beginRow);
+			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Member bean = new Member();
+				bean.setAddress1(rs.getString("address1"));
+				bean.setAddress2(rs.getString("address2"));
+				bean.setBirth(rs.getString("birth"));
+				bean.setEmail1(rs.getString("email1"));
+				bean.setEmail2(rs.getString("email2"));
+				bean.setGender(rs.getString("gender"));
+				bean.setId(rs.getString("id"));
+				bean.setName(rs.getString("name"));
+				bean.setNickname(rs.getString("nickname"));
+				bean.setPassword(rs.getString("password"));
+				bean.setPhone1(rs.getString("phone1"));
+				bean.setPhone2(rs.getString("phone2"));
+				bean.setPhone3(rs.getString("phone3"));
+				bean.setRegDate(rs.getString("regDate"));
+				bean.setZipcode(rs.getString("zipcode"));
+				lists.add(bean);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				this.closeConn();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return lists;
+	}
 }

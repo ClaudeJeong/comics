@@ -132,9 +132,9 @@
 							class="form-control" id="email2" name="email2"
 							style="border-color: black;" onchange="changeEmail()">
 							<option value="all">선택하세요
-							<option value="@naver.com">naver.com
-							<option value="@gmail.com">gmail.com
-							<option value="@daum.net">daum.net
+							<option value="naver.com">naver.com
+							<option value="gmail.com">gmail.com
+							<option value="daum.net">daum.net
 							<option value="selfwrite">직접입력
 						</select>
 						<input type="text" class="form-control" style="border-color: black; width: 15%; display: none"

@@ -38,6 +38,8 @@ public class Paging {
 		
 		this.totalCount = totalCount ;
 		this.url = url ;
+		this.mode = mode ;
+		this.keyword = keyword ; 
 		
 		this.totalPage = (int)Math.ceil((double)totalCount / pageSize) ;
 		
@@ -56,8 +58,7 @@ public class Paging {
 		this.pagingStatus = "총 " + totalCount + "건[" 
 				+ this.pageNumber + "/" + this.totalPage + "]" ;
 		
-		this.mode = mode ;
-		this.keyword = keyword ; 
+		
 		
 		//this.DisplayInformation(); 
 	}
@@ -73,10 +74,10 @@ public class Paging {
 			//result += "맨처음&nbsp;&nbsp;";
 			//result += "이전&nbsp;&nbsp;";			
 		} else {
-			result += "<li><a href='" + url + "?pageNumber=" + 1 + 
+			result += "<li><a href='" + url + "&pageNumber=" + 1 + 
 				"&pageSize=" + pageSize + add_param + "'>맨처음</a></li>&nbsp;&nbsp;";
 			
-			result += "<li><a href='" + url + "?pageNumber=" + (beginPage - 1) + 
+			result += "<li><a href='" + url + "&pageNumber=" + (beginPage - 1) + 
 				"&pageSize=" + pageSize + add_param + "'>이전</a></li>&nbsp;&nbsp;";
 		}		
 		//페이지 시작 번호 부터 ~ 끝 번호 까지 표시
@@ -85,7 +86,7 @@ public class Paging {
 			if(i == pageNumber){ //현재 페이지이면 링크는 없고, 빨간색으로 표시
 				result += "<li class='active'><a><font color='red'><b>" + i + "</b></font></a></li>&nbsp;";
 			}else{
-				result += "<li><a href='" + url + "?pageNumber=" + i + 
+				result += "<li><a href='" + url + "&pageNumber=" + i + 
 					"&pageSize=" + pageSize + add_param + "'>" + i + "</li></a>&nbsp;";	
 			}			
 		}
@@ -95,10 +96,10 @@ public class Paging {
 			//result += "다음&nbsp;&nbsp;";
 			//result += "맨 끝&nbsp;&nbsp;";	
 		} else {			
-			result += "<li><a href='" + url + "?pageNumber=" + (endPage + 1) + 
+			result += "<li><a href='" + url + "&pageNumber=" + (endPage + 1) + 
 				"&pageSize=" + pageSize + add_param + "'>다음</a></li>&nbsp;&nbsp;";
 			
-			result += "<li><a href='" + url + "?pageNumber=" + totalPage + 
+			result += "<li><a href='" + url + "&pageNumber=" + totalPage + 
 				"&pageSize=" + pageSize + add_param + "'>맨 끝</a></li>";
 		}
 		result += "</ul>"; 
