@@ -10,7 +10,5 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/oraclexe/app/oracle/product/10.2.0/server/jdbc/lib/ojdbc14.jar"/>
-	<classpathentry kind="lib" path="C:/Users/owner/Desktop/ruru java project/제이슨/genson-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/owner/Desktop/ruru java project/제이슨/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
