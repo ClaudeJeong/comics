@@ -60,7 +60,7 @@ public class FrontController extends HttpServlet implements SuperController {
 				Class<?> realClass = Class.forName(handlerClassName);
 				SuperController ClassInstance = (SuperController) realClass.newInstance();
 				actionMap.put(command, ClassInstance);
-				//System.out.println("키값 : " + actionMap.keySet() + "이동 클래스 : " + actionMap.values());
+				System.out.println("키값 : " + actionMap.keySet() + "이동 클래스 : " + actionMap.values());
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (InstantiationException e) {
@@ -93,7 +93,7 @@ public class FrontController extends HttpServlet implements SuperController {
 		}
 		SuperController controller = actionMap.get(command);
 		if( controller != null){
-			//System.out.println(controller.toString() + " 가 호출됨");
+			System.out.println(controller.toString() + " 가 호출됨");
 			controller.doProcess(request, response);
 		}
 	

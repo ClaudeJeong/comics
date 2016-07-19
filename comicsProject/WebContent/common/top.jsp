@@ -65,7 +65,7 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">회원(로그인시)
         <span class="caret"></span></a>
          <ul class="dropdown-menu">
-          <li><a href="#">회원 리스트(관리자)</a></li>
+          <li><a href="<%=MyCtrlCommand%>meList">회원 리스트(관리자)</a></li>
           <li><a href="#">정보 수정</a></li>
           <li><a href="#">아이디/비밀번호 찾기</a></li> 
           <li><a href="#">회원 탈퇴</a></li>

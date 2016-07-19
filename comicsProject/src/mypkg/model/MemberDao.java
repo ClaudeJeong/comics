@@ -20,25 +20,28 @@ public class MemberDao extends SuperDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()){
+
+			while (rs.next()) {
 				bean.setId(rs.getString("id"));
 				bean.setPassword(rs.getString("password"));
 				bean.setNickname(rs.getString("nickname"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			try {
-			if(pstmt != null){ pstmt.close(); }
-			if(rs != null){rs.close();}
-			super.closeConn();
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+				super.closeConn();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			 }
+			}
 		}
-		
-		
+
 		return bean;
 	}
 
@@ -46,13 +49,13 @@ public class MemberDao extends SuperDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<Zipcode> lists = new ArrayList<Zipcode>();
-		String sql=" select * ";
-			   sql+=" from zipcodes where dong like '%" + dong + "%'" ;
-			   sql+=" order by sido asc, gugun asc, dong asc ";
+		String sql = " select * ";
+		sql += " from zipcodes where dong like '%" + dong + "%'";
+		sql += " order by sido asc, gugun asc, dong asc ";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				Zipcode zip = new Zipcode();
 				zip.setBunji(rs.getString("bunji"));
 				zip.setDong(rs.getString("dong"));
@@ -60,19 +63,23 @@ public class MemberDao extends SuperDao {
 				zip.setSido(rs.getString("sido"));
 				zip.setZipcode(rs.getString("zipcode"));
 				zip.setSeqnum(Integer.parseInt(rs.getString("seqnum")));
-				//System.out.println(zip.toString());
-				
+				// System.out.println(zip.toString());
+
 				lists.add(zip);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			 try {
-				 if(pstmt != null){ pstmt.close(); }
-				 if(rs != null){ rs.close(); }
-				 super.closeConn();
-			 } catch (SQLException e) {
-				 e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+				super.closeConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		}
 		return lists;
@@ -133,29 +140,66 @@ public class MemberDao extends SuperDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = " select id from members where id = ? ";
-		
+
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
-				if(rs.next()){
-					check = false;
-				}else{
-					check = true;
-				}
-			
+			if (rs.next()) {
+				check = false;
+			} else {
+				check = true;
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch(NullPointerException e){
-		}finally {
+		} catch (NullPointerException e) {
+		} finally {
 			try {
-				if (pstmt != null) {pstmt.close();}
-				if (rs != null) {rs.close();}	
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 		return check;
 	}
-	
+
+	public boolean checkNickname(String nickname) {
+		boolean check = false;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = " select nickname from members where nickname = ? ";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nickname);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				check = false;
+			} else {
+				check = true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return check;
+	}
 }

@@ -7,9 +7,6 @@
 	int myOffset = 3;
 	int mySetGrid = totalGrid - (myOffset * 2);
 %>
-<% 
-	boolean formCheck = false;
-%>
 <html>
 <head>
 <meta name = "viewport" content = "width=device-width, initial-scale = 1">
@@ -48,13 +45,13 @@
 	<div class="row col-sm-offset-<%=myOffset%> col-sm-<%=mySetGrid%>"
 		style="margin-top: 30px;">
 		<form action="<%=MyCtrlCommand%>meJoin" name="form" id="form" method="post">
-		<input type="text" id="falseid" name="isCheck" value="false">
-		<input type="text" id="falsename" name="isCheck" value="false">
-		<input type="text" id="falsepass" name="flasepass" value="false">
-		<input type="text" id="falserepass" name="flaserepass" value="false">
-		<input type="text" id="falsenickname" name="flasenickname" value="false">
-		<input type="text" id="falsephone2" name="flasephone2" value="false">
-		<input type="text" id="falsephone3" name="flasephone3" value="false">
+		<input type="hidden" id="falseid" name="falseid" value="false">
+		<input type="hidden" id="falsename" name="falsename" value="false">
+		<input type="hidden" id="falsepass" name="falsepass" value="false">
+		<input type="hidden" id="falserepass" name="falserepass" value="false">
+		<input type="hidden" id="falsenickname" name="falsenickname" value="false">
+		<input type="hidden" id="falsephone2" name="falsephone2" value="false">
+		<input type="hidden" id="falsephone3" name="falsephone3" value="false">
 			<div class="panel">
 				<div class="panel-body">
 					<div style="margin-top: -10px;">
@@ -117,15 +114,16 @@
 						<hr class="colorgraph">
 					</div>
 					
-					<div class="form-control"
-						style="border: solid 1px; border-color: black; width: 30%">
+					<div class="form-inline">
 						<input type="radio" class="radio-inline" id="gender" name="gender"
-							value="남자">남자 <input type="radio" class="radio-inline"
+							value="남자">남자 
+						<input type="radio" class="radio-inline"
 							id="gender" name="gender" value="여자">여자
 							&nbsp;&nbsp;
 							<span id="gendercheck"></span>
 					</div>
 					<br>
+					
 					<div class="form-inline">
 						<input type="text" class="form-control"
 							style="border-color: black; width: 15%;" placeholder="이메일"
@@ -141,6 +139,7 @@
 						</select>
 						<input type="text" class="form-control" style="border-color: black; width: 15%; display: none"
 							name="email3" id="email3">
+							<span id="emailcheck"></span>
 					</div>
 					<br>
 					<div class="form-inline">
@@ -156,7 +155,7 @@
 					<br>
 					
 					<div class="form-inline">
-						<input type="text" size="8" class="form-control" id="zipode"
+						<input type="text" size="8" class="form-control" id="zipcode"
 							name="zipcode" style="border-color: black;"
 							placeholder="우편번호" readonly="readonly">
 							&nbsp;&nbsp;&nbsp; 
@@ -188,7 +187,7 @@
 			</div>
 			<div class="row col-sm-offset-6">
 				<div class="form-group">
-					<button type="submit" class="btn btn-success btn-lg" onclick="return checkFinall();" >가입하기</button>
+					<button type="submit" class="btn btn-success btn-lg" onclick="return finallCheck();">가입하기</button>
 				</div>
 				</div>
 		</form>
@@ -208,19 +207,17 @@ function zipCheck(){
 	var url='<%=MyCtrlCommand%>meZipCheck';
 	window.open(url, 'mywin','height=600,width=720,status=yes,scrollbars=yes,resizable=no');
 }
-function checkFinall(){
-	
-}
- var cnt = 0;
 $(document).ready(function() {
 	var reg = "";
 	$('#id1').keyup(function() {
 		if ( $('#id1').val().length < 4 || $('#id1').val().length > 11 ) {
 			$('#idcheck').html("<span class='alert-danger'>4글자 이상 10글자 이하로 입력하세요</span>");
+			$("#falseid").val(false);
 	}else{
 		reg=/^[a-zA-Z0-9]*$/;
 		if($('#id1').val().search(reg) == -1){
 			$('#idcheck').html("<span class='alert-danger'>영문과 숫자로만 입력하세요</span>");
+			$("#falseid").val(false);
 		}else{
 			$.ajax({
 				type : "post",
@@ -235,6 +232,7 @@ $(document).ready(function() {
 						$("#falseid").val(true);
 					} else {
 						$("#idcheck").html("<span class='alert-danger'>이미 사용중인 아이디입니다</span>");
+						$("#falseid").val(false);
 					}
 				
 				}
@@ -249,9 +247,17 @@ $(document).ready(function() {
 	$('#name').keyup(function() {
 		if ($('#name').val().length < 2) {
 		$('#namecheck').html("<span class='alert-danger'>2글자 이상 입력하세요</span>");
+		$("#falsename").val(false);
 	}else{
-		$('#namecheck').html("<span class='alert-danger'> </span>");
-		$("#falsename").val(true);
+		var reg=/^[가-힣][^\s]+$/;
+		if($('#name').val().search(reg) == -1){
+			$('#namecheck').html("<span class='alert-danger'>공백없이 한글만 입력하세요</span>");
+			$("#falsename").val(false);
+		}else{
+			$('#namecheck').html("<span class='alert-danger'> </span>");
+			$("#falsename").val(true);
+		}
+		
 	}
 });
 });
@@ -260,6 +266,7 @@ $(document).ready(function() {
 	$('#password1').keyup(function() {
 		if ( $('#password1').val().length < 6 || $('#password1').val().length > 16 ) {
 		$('#passwordcheck').html("<span class='alert-danger'>6글자 이상 15글자 이하로 입력하세요</span>");
+		$("#falsepass").val(false);
 		}else{
 		$('#passwordcheck').html("<span class='alert-danger'> </span>");
 		$("#falsepass").val(true);
@@ -271,30 +278,92 @@ $(document).ready(function() {
 	$('#repassword').keyup(function() {
 		if ($('#password1').val() == $('#repassword').val() ) {
 			$('#repasswordcheck').html("<span class='alert-danger'> </span>");
+			$("#falserepass").val(true);
 		}else{
 			$('#repasswordcheck').html("<span class='alert-danger'>다시 한 번 비밀번호를 입력하세요</span>");
-			$("#falserepass").val(true);
+			$("#falserepass").val(false);
 }
 });
 });
 
-$(document).ready(function() {	
+$(document).ready(function() {
 	$('#nickname').keyup(function() {
-		if ($('#nickname').val().length < 2 || $('#nickname').val().length > 11 ) {
+		if ( $('#nickname').val().length < 2 || $('#nickname').val().length > 11 ) {
 			$('#nicknamecheck').html("<span class='alert-danger'>2글자 이상 10글자 이하로 입력하세요</span>");
+			$("#falsenickname").val(false);
+	}else{
+		var reg=/^[^\s]+$/;
+		if($('#nickname').val().search(reg) == -1){
+			$('#nicknamecheck').html("<span class='alert-danger'>공백안대여</span>");
+			$("#falsenickname").val(false);
 		}else{
+			$.ajax({
+				
+				type : "post",
+				url : "<%=MyCtrlCommand%>meNickNameCheck",
+				dataType : "JSON",
+				data : {
+					"nickname" : $("#nickname").val(),
+				},
+				success : function(result) {
+					if(result.check) {
+						$("#nicknamecheck").html("<span class='alert-success'>사용 가능한 닉네임입니다</span>");
+						$("#falsenickname").val(true);
+					} else {
+						$("#nicknamecheck").html("<span class='alert-danger'>이미 사용중인 닉네임입니다</span>");
+						$("#falsenickname").val(false);
+					}
+				
+				}
+			});
 			
-			$('#nicknamecheck').html("<span class='alert-danger'> </span>");
-			$("#falsenickname").val(true);
-}
+		}
+	}
+		
+	});
+
 });
+
+$(document).ready(function() {
+	$('#email1').keyup(function() {
+		if($('#email1').val().length < 4 || $('#email1').val().length > 12){
+				$('#emailcheck').html("<span class='alert-danger'>4자 이상 12자 이하로 입력하세요</span>");
+		}else{
+			var reg =/^[a-zA-Z0-9]*$/;
+			if($('#email1').val().search(reg) == -1){
+				$('#emailcheck').html("<span class='alert-danger'>영문과 숫자로만 입력하세요</span>");
+			}else{
+				$('#emailcheck').html("<span class='alert-danger'></span>");
+			}
+			
+		}
+	
 });
+	});
+	
+$(document).ready(function() {
+	$('#email3').keyup(function() {
+		if($('#email3').val().length < 4 || $('#email3').val().length > 11){
+				$('#emailcheck').html("<span class='alert-danger'>4자 이상 10자 이하로 입력하세요</span>");
+		}else{
+			var reg =/^[a-zA-Z0-9-]+(\.[com|net]+)$/;
+			if($('#email3').val().search(reg) == -1){
+				$('#emailcheck').html("<span class='alert-danger'>영문, 숫자, 이메일 형식으로 쓰세요</span>");
+			}else{
+				$('#emailcheck').html("<span class='alert-danger'></span>");
+			}
+			
+		}
+	
+});
+	});	
 
 $(document).ready(function() {	
 	$('#phone2').keyup(function() {
 		reg=/^\d{3,4}$/;
 		if($('#phone2').val().length == 0 || $('#phone2').val().search(reg) == -1 ){
 			$('#phonecheck').html("<span class='alert-danger'>숫자를 입력해 주세요</span>");
+			$("#falsephone2").val(false);
 		}else{
 			$('#phonecheck').html("<span class='alert-danger'> </span>");
 			$("#falsephone2").val(true);
@@ -308,12 +377,55 @@ $(document).ready(function() {
 		reg=/^\d{4}$/;
 		if($('#phone3').val().search(reg) == -1){
 			$('#phonecheck').html("<span class='alert-danger'>숫자를 입력해 주세요</span>");
+			$("#falsephone3").val(false);
 		}else{
 				$('#phonecheck').html("<span class='alert-danger'> </span>");
 				$("#falsephone3").val(true);
 		}	
 });
 });
+
+function finallCheck(){
+	var falseid = document.form.falseid.value;
+	var falsepass = document.form.falsepass.value;
+	var falserepass = document.form.falserepass.value;
+	var falsename = document.form.falsename.value;
+	var falsenickname = document.form.falsenickname.value;
+	var falsephone2 = document.form.falsephone2.value;
+	var falsephone3 = document.form.falsephone3.value;
+	if(falseid == "true" && falsepass == "true" && falserepass == "true" && falsename == "true" && falsenickname == "true" && falsephone2 == "true" && falsephone3 == "true"){
+	    var gender = document.form.gender ;
+        if( gender[0].checked == true || gender[1].checked == true ){
+        	$('#gendercheck').html("<span class='alert-danger'></span>");
+        }else{
+        	$('#gendercheck').html("<span class='alert-danger'>성별을 하나 선택하세요</span>");
+        	return false;
+        }
+		var address2 =  document.form.address2.value;
+		var zipcode =  document.form.zipcode.value;
+		//alert(zipcode);
+		if(zipcode.length == 0){
+			//alert("여기집코드");
+			$('#zipcodecheck').html("<span class='alert-danger'>우편번호를 검색해 주세요</span>");
+			$('#address1check').html("<span class='alert-danger'>주소를 검색해 주세요</span>");
+			return false;
+		}else{
+			$('#zipcodecheck').html("<span class='alert-danger'></span>");
+			$('#address1check').html("<span class='alert-danger'></span>");
+		}	
+		if(address2.length == 0){
+			$('#address2check').html("<span class='alert-danger'>상세주소를 입력해 주세요</span>");
+			return false;
+		}else{
+			$('#address2check').html("<span class='alert-danger'></span>");
+		}
+	}else{
+		alert("잘 못 입력한 부분이 있습니다");
+		return false;
+	}
+	return true;
+}
+	
 </script>
 
 <script language = "javascript" type = "text/javascript">

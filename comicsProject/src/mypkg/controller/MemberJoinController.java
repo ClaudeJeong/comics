@@ -12,13 +12,12 @@ import mypkg.model.MemberDao;
 import mypkg.util.Validator;
 
 
-public class MemberJoinController implements SuperController, Validator {
-	private HttpServletRequest request ;
-	private Member bean = null ;
+public class MemberJoinController implements SuperController {
+	
 	@Override
 	public void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.request = request ;
+		Member bean = new Member();
 		bean = new Member();
 		bean.setId(request.getParameter("id1"));
 		bean.setAddress1(request.getParameter("address1"));
@@ -40,42 +39,18 @@ public class MemberJoinController implements SuperController, Validator {
 		bean.setPhone3(request.getParameter("phone3"));
 		//System.out.println(bean.toString());
 		
-		String url = "";
-		if(this.checkValidate() == false){
-			url="/meView/meJoinForm.jsp";
-			this.request.setAttribute("bean", bean);
-		}else{
+		
 			MemberDao mDao = new MemberDao();
-			url="main.jsp";
+			String url="main.jsp";
 			int cnt = -99999;
 			cnt = mDao.InsertData(bean);
-		}
+		
 		
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(this.request, response);		
+		dispatcher.forward(request, response);		
 	}
 	
 
-	@Override
-	public boolean checkValidate() {
-		boolean isCheck = true;
-		
-		if(bean.getGender() == null){
-			this.request.setAttribute("errgender", "성별은 반드시 체크 하시지 말입니다.");
-			isCheck = false;
-		}
-		
-		if(bean.getZipcode().equals("")){
-			this.request.setAttribute("errzip", "우편번호는 필수지 말입니다.");
-			isCheck = false;
-		}
-		
-		if(bean.getAddress2().equals("")){
-			this.request.setAttribute("erraddress", "주소는 필수지 말입니다.");
-			isCheck = false;
-		}
-		return isCheck;
-	}
 
 }

@@ -31,10 +31,10 @@ public class MemberLoginController implements SuperController {
 				HttpSession session = request.getSession();
 				session.setAttribute("loginfo", bean);
 				url = "main.jsp";
-				System.out.println("로그인성공");
+				//System.out.println("로그인성공");
 			} else { // 패스워드 일치하지 않는 경우
 				url = "main.jsp";
-				System.out.println("패스워드 틀림");
+				//System.out.println("패스워드 틀림");
 			}
 		}
 
