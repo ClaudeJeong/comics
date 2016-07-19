@@ -1,4 +1,4 @@
-package member_controller;
+package mypkg.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 
-import common_controller.SuperController;
-import model.MemberDao;
+import mypkg.model.MemberDao;
 
 public class MemberIdCheckController implements SuperController {
 

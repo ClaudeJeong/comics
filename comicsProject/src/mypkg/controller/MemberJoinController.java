@@ -1,4 +1,4 @@
-package member_controller;
+package mypkg.controller;
 
 import java.io.IOException;
 
@@ -7,10 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import common_controller.SuperController;
-import model.Member;
-import model.MemberDao;
-import util.Validator;
+import mypkg.model.Member;
+import mypkg.model.MemberDao;
+import mypkg.util.Validator;
 
 
 public class MemberJoinController implements SuperController, Validator {

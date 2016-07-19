@@ -1,4 +1,4 @@
-package model;
+package mypkg.model;
 
 public class Member {
 	//Instance	

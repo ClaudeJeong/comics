@@ -1,4 +1,4 @@
-package util;
+package mypkg.util;
 
 import java.io.IOException;
 

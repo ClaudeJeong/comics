@@ -1,4 +1,4 @@
-package member_controller;
+package mypkg.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,9 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import common_controller.SuperController;
-import model.MemberDao;
-import model.Zipcode;
+import mypkg.model.MemberDao;
+import mypkg.model.Zipcode;
 
 public class MemberZipCheckController implements SuperController {
 

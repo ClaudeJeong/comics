@@ -1,4 +1,4 @@
-package common_controller;
+package mypkg.controller;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oreilly.servlet.MultipartRequest;
+import mypkg.util.MyFileUpload;
 
-import util.MyFileUpload;
+import com.oreilly.servlet.MultipartRequest;
 
 @WebServlet(urlPatterns = { "/ComicsCtrl" }, initParams = {
 		@WebInitParam(name = "configFile", value = "/WEB-INF/commandList.properties") })
