@@ -7,6 +7,9 @@
 	int myOffset = 3;
 	int mySetGrid = totalGrid - (myOffset * 2);
 %>
+<% 
+	boolean formCheck = false;
+%>
 <html>
 <head>
 <meta name = "viewport" content = "width=device-width, initial-scale = 1">
@@ -45,7 +48,13 @@
 	<div class="row col-sm-offset-<%=myOffset%> col-sm-<%=mySetGrid%>"
 		style="margin-top: 30px;">
 		<form action="<%=MyCtrlCommand%>meJoin" name="form" id="form" method="post">
-		<input type="text" name="isCheck" value="false">
+		<input type="text" id="falseid" name="isCheck" value="false">
+		<input type="text" id="falsename" name="isCheck" value="false">
+		<input type="text" id="falsepass" name="flasepass" value="false">
+		<input type="text" id="falserepass" name="flaserepass" value="false">
+		<input type="text" id="falsenickname" name="flasenickname" value="false">
+		<input type="text" id="falsephone2" name="flasephone2" value="false">
+		<input type="text" id="falsephone3" name="flasephone3" value="false">
 			<div class="panel">
 				<div class="panel-body">
 					<div style="margin-top: -10px;">
@@ -223,7 +232,7 @@ $(document).ready(function() {
 				success : function(result) {
 					if(result.check) {
 						$("#idcheck").html("<span class='alert-success'>사용 가능한 아이디입니다.</span>");
-						$("#isCheck").val(true);
+						$("#falseid").val(true);
 					} else {
 						$("#idcheck").html("<span class='alert-danger'>이미 사용중인 아이디입니다</span>");
 					}
@@ -242,6 +251,7 @@ $(document).ready(function() {
 		$('#namecheck').html("<span class='alert-danger'>2글자 이상 입력하세요</span>");
 	}else{
 		$('#namecheck').html("<span class='alert-danger'> </span>");
+		$("#falsename").val(true);
 	}
 });
 });
@@ -252,6 +262,7 @@ $(document).ready(function() {
 		$('#passwordcheck').html("<span class='alert-danger'>6글자 이상 15글자 이하로 입력하세요</span>");
 		}else{
 		$('#passwordcheck').html("<span class='alert-danger'> </span>");
+		$("#falsepass").val(true);
 }
 });
 });
@@ -262,6 +273,7 @@ $(document).ready(function() {
 			$('#repasswordcheck').html("<span class='alert-danger'> </span>");
 		}else{
 			$('#repasswordcheck').html("<span class='alert-danger'>다시 한 번 비밀번호를 입력하세요</span>");
+			$("#falserepass").val(true);
 }
 });
 });
@@ -273,6 +285,7 @@ $(document).ready(function() {
 		}else{
 			
 			$('#nicknamecheck').html("<span class='alert-danger'> </span>");
+			$("#falsenickname").val(true);
 }
 });
 });
@@ -284,6 +297,7 @@ $(document).ready(function() {
 			$('#phonecheck').html("<span class='alert-danger'>숫자를 입력해 주세요</span>");
 		}else{
 			$('#phonecheck').html("<span class='alert-danger'> </span>");
+			$("#falsephone2").val(true);
 		}
 
 });
@@ -296,6 +310,7 @@ $(document).ready(function() {
 			$('#phonecheck').html("<span class='alert-danger'>숫자를 입력해 주세요</span>");
 		}else{
 				$('#phonecheck').html("<span class='alert-danger'> </span>");
+				$("#falsephone3").val(true);
 		}	
 });
 });
