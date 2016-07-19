@@ -4,6 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
+	int twelve = 12 ; //그리드 시스템의 숫자 값
+%>  
+<%
 	String context = request.getContextPath();
 	String servPath = "/ComicsCtrl";
 	String MyCtrlCommand = context + servPath +"?command=";
@@ -73,7 +76,7 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">도서 목록
         <span class="caret"></span></a>
          <ul class="dropdown-menu">
-          <li><a href="#">전체 도서</a></li>
+          <li><a href="<%=MyCtrlCommand%>bkList">전체 도서</a></li>
           <li><a href="#">신간 도서</a></li>
           <li><a href="#">인기 도서</a></li>
           <li><a href="#">도서 등록(관리자)</a></li>
