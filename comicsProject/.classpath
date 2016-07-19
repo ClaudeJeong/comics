@@ -13,5 +13,8 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/ojdbc14.jar"/>
+	<classpathentry kind="lib" path="C:/Users/JongSeop/Desktop/새홀리기/genson-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/JongSeop/Desktop/새홀리기/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
