@@ -39,13 +39,13 @@
 						</form>
 					</td>
 				</tr>
-					<tr align="center">
-						<th>아이디</th>
-						<th>이름</th>
-						<th>닉네임</th>
-						<th>성별</th>
-						<th>전화번호</th>
-						<th>이메일<th>
+					<tr >
+						<th style="text-align: center;">아이디</th>
+						<th style="text-align: center;">이름</th>
+						<th style="text-align: center;">닉네임</th>
+						<th style="text-align: center;">성별</th>
+						<th style="text-align: center;">전화번호</th>
+						<th style="text-align: center;">이메일<th>
 					</tr>
 				</thead>
 				<c:forEach var="bean" items="${requestScope.lists}">

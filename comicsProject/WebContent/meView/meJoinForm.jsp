@@ -420,7 +420,7 @@ function finallCheck(){
 			$('#address2check').html("<span class='alert-danger'></span>");
 		}
 	}else{
-		alert("잘 못 입력한 부분이 있습니다");
+		alert("제대로 입력하시지 말입니다");
 		return false;
 	}
 	return true;
