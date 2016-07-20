@@ -13,8 +13,10 @@ public class MemberDao extends SuperDao {
 	public Member selectByPk(String id) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = " select id, password, nickname from members where id = ? ";
 		Member bean = new Member();
+		String sql = " select id, password, name, nickname, email1, email2, to_char(birth,'yyyy/MM/dd')as birth, gender, phone1, phone2, phone3, zipcode, address1, address2, to_char(regdate,'yyyy/MM/dd')as regdate from members ";
+			   
+				sql += " where id = ? ";
 		this.conn = getConn();
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -22,9 +24,21 @@ public class MemberDao extends SuperDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
+				bean.setAddress1(rs.getString("address1"));
+				bean.setAddress2(rs.getString("address2"));
+				bean.setBirth(rs.getString("birth"));
+				bean.setEmail1(rs.getString("email1"));
+				bean.setEmail2(rs.getString("email2"));
+				bean.setGender(rs.getString("gender"));
 				bean.setId(rs.getString("id"));
-				bean.setPassword(rs.getString("password"));
+				bean.setName(rs.getString("name"));
 				bean.setNickname(rs.getString("nickname"));
+				bean.setPassword(rs.getString("password"));
+				bean.setPhone1(rs.getString("phone1"));
+				bean.setPhone2(rs.getString("phone2"));
+				bean.setPhone3(rs.getString("phone3"));
+				bean.setRegDate(rs.getString("regdate"));
+				bean.setZipcode(rs.getString("zipcode"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

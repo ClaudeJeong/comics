@@ -419,11 +419,18 @@ function finallCheck(){
 		}else{
 			$('#address2check').html("<span class='alert-danger'></span>");
 		}
+		var password =  document.form.password1.value;
+		var repassword =  document.form.repassword.value;
+		//alert(zipcode);
+		if( password != repassword){
+			alert("비밀번호 다시 확인 해 주세요");
+			return false;
+		}
 	}else{
 		alert("제대로 입력하시지 말입니다");
 		return false;
 	}
-	return true;
+		return true;
 }
 	
 </script>
