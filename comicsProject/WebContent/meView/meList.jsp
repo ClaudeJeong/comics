@@ -26,7 +26,8 @@
 								<select class="form-control" name="mode" id="mode">
 									<option value="all" selected="selected">-- 선택하세요---------
 									<option value="id">아이디
-									<option value="name">이름									
+									<option value="name">이름	
+									<option value="phone3">핸드폰							
 								</select>
 							</div>
 							<div class="form-group">
@@ -51,7 +52,7 @@
 				<c:forEach var="bean" items="${requestScope.lists}">
 					<tr align="center">
 						<td>
-							<a href="#">${bean.id}</a>
+							<a href="<%=MyCtrlCommand%>meDetailView&id=${bean.id}">${bean.id}</a>
 						</td>
 						<td>${bean.name}</td>
 						<td>${bean.nickname}</td>

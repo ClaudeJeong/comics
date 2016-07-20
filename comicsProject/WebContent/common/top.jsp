@@ -68,7 +68,7 @@
           <li><a href="<%=MyCtrlCommand%>meList">회원 리스트(관리자)</a></li>
           <li><a href="#">정보 수정</a></li>
           <li><a href="#">아이디/비밀번호 찾기</a></li> 
-          <li><a href="#">회원 탈퇴</a></li>
+          <li><a href="#" onclick="return byeMember();">회원 탈퇴</a></li>
           <li><a href="#">로그 아웃</a></li>
         </ul>
       </li>
@@ -147,7 +147,16 @@
           </div>
 </nav>
 </div>
-
+<script type="text/javascript">
+function byeMember(){
+		if(confirm("정말 탈퇴할꺼에요?ㅠㅠ")){
+			var url='<%=MyCtrlCommand%>meDeleteForm';
+			window.open(url, 'mywin','height=300,width=220,status=yes,scrollbars=yes,resizable=no');
+		}else{
+				return false;
+		}
+}
+</script>
 </body>
 </html>
 
