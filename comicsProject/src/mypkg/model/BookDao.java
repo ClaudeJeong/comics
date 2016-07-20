@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDao extends SuperDao {
-	//아직 안함
+	
+	//도서 등록
 	public int InsertData( Book bean ){
 		System.out.println( bean.toString() ); 
 		String sql = "insert into books(bookcode, name, volume, writer, publisher, pubdate, genre, image, bookstat, bookstory) " ;
-		sql += " values(seqprod.nextval, ?, ?, ?, ?, to_date(?, 'yyyy/MM/dd'), ?, ?, ?, ?) " ;
+		sql += " values(seqprod.nextval, ?, ?, ?, ?, to_date(?, 'yyyy/MM/dd'), ?, ?, default, ?) " ;
 		PreparedStatement pstmt = null ;
 		int cnt = -99999 ;
 		try {
@@ -25,8 +26,10 @@ public class BookDao extends SuperDao {
 			pstmt.setString(4, bean.getPublisher());
 			pstmt.setString(5, bean.getPubdate());
 			pstmt.setString(6, bean.getGenre());
-			pstmt.setString(7, bean.getImage());
-			pstmt.setString(8, bean.getBookstat());
+			//책 이미지 이름은 책 제목과 책 볼륨의 문자열 조합이다. 
+			String image = bean.getName() + " " + bean.getVolume();
+			pstmt.setString(7, image);
+			//pstmt.setString(8, bean.getBookstat());
 			pstmt.setString(9, bean.getBookstory());
 			
 			cnt = pstmt.executeUpdate() ; 

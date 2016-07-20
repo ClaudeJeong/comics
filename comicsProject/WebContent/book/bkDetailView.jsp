@@ -25,10 +25,10 @@
 %>
 <body>
 	<div class="container col-sm-offset-<%=myoffset%> col-sm-<%=mywidth%>">
-		<div class="panel panel-default panel-primary">
+		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h1 class="panel-title" align="left">책 제목 몇권</h1>
-				작가 | 출판사 | 출간일
+				<div class="panel-title" align="left" ><b>${bean.name} ${bean.volume}권</b></div>
+				&nbsp;&nbsp;&nbsp;${bean.writer}   |   ${bean.publisher}   |   ${bean.pubdate}
 			</div>
 			<div class="panel-body">
 				<div class="col-sm-<%=leftside%> col-sm-<%=leftside%>">
@@ -43,23 +43,23 @@
 					<table class="table table-hover table-condensed">
 						<tr>
 							<td width="25%" align="center">장르</td>
-							<td width="75%" align="left">환타지</td>
+							<td width="75%" align="left">${bean.genre}</td>
 						</tr>
 						<tr>
 							<td width="25%" align="center">북코드</td>
-							<td width="75%" align="left">12342345</td>
+							<td width="75%" align="left">${bean.bookcode}</td>
 						</tr>
 						<tr>
 							<td width="25%" align="center">대여 상태</td>
-							<td width="75%" align="left">대여중</td>
+							<td width="75%" align="left">${bean.bookstat}</td>
 						</tr>
 					</table>
 				</div>
 				<hr>
 				<div class="col-sm-offset-5 col-sm-4">
-					<button class="btn btn-primary" onclick="history.back();">
+					<button class="btn btn-default" onclick="history.back();">
 						예약 하기</button>
-					<button class="btn btn-primary" onclick="history.back();">
+					<button class="btn btn-default" onclick="history.back();">
 						돌아 가기</button>
 				</div>
 			</div>
@@ -77,7 +77,7 @@
 							<th>줄거리</th>
 						</tr>
 						<tr>
-							<td>블라블라블라</td>
+							<td>${bean.bookstory}</td>
 						</tr>
 				</table>
 				<table class="table table-hover table-condensed">

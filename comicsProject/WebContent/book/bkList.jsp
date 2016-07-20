@@ -44,10 +44,10 @@
 							<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>bkList" method="post">
 								<div class="form-group">
 									<select class="form-control" name="mode" id="mode">
-										<option value="all" selected="selected">-- 선택하세요---------
-										<option value="name">삼품명
-										<option value="company">제조회사
-										<option value="category">카테고리									
+										<option value="all" selected="selected">-- 보류---------
+										<option value="name">책
+										<option value="company">책2
+										<option value="category">책3								
 									</select>
 								</div>
 								<div class="form-group">
@@ -73,7 +73,7 @@
 				<tr>
 					<td>${bean.image}</td>
 					<td>
-						<a href="<%=MyCtrlCommand%>bkDetailView&num=${bean.bookcode}">
+						<a href="<%=MyCtrlCommand%>bkDetailView&bookcode=${bean.bookcode}">
 								${bean.name} ${bean.volume}권
 						</a>
 					</td>
