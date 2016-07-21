@@ -15,8 +15,8 @@
 <div class="row col-sm-4">
 여기가 메인입니다.<br>
 메인 메인 메인
-<input type="hidden" value="<%=message%>" id="message" name="message">
 </div>
+<input type="hidden" value="<%=message%>" id="message" name="message">
 <c:if test="${not empty requestScope.message}">
 		<script type="text/javascript">
 		var url = './common/message.jsp';

@@ -88,9 +88,6 @@ function selfClose(){
 		window.close();
 		return true;
 	}else{
-		</script>
-		<jsp:forward page=""></jsp:forward>
-		<script type="text/javascript">
 		alert("비밀번호를 확인해 주세요");
 		return false;
 	}
