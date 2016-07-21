@@ -68,7 +68,7 @@
          <ul class="dropdown-menu">
           <li><a href="<%=MyCtrlCommand%>meList">회원 리스트(관리자)</a></li>
           <li><a href="#">정보 수정</a></li>
-          <li><a href="#">아이디/비밀번호 찾기</a></li> 
+          <li><a href="<%=MyCtrlCommand%>meFindIdPassForm">아이디/비밀번호 찾기</a></li> 
           <li><a href="<%=MyCtrlCommand%>meDelete" onclick="return byeMember()">회원 탈퇴</a></li>
           <li><a href="#">로그 아웃</a></li>
         </ul>
