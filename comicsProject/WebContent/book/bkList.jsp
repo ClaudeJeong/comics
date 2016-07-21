@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="./../common/top.jsp"%>
 <%
-	int myoffset = 2;
+	int myoffset = 1;
 	int mywidth = twelve - 2 * myoffset;
 	int formleft = 3 ;
 	int formright = twelve - formleft ; 
@@ -71,7 +71,9 @@
 				</thead>
 				<c:forEach var="bean" items="${requestScope.lists}">
 				<tr>
-					<td>${bean.image}</td>
+					<td>
+						<img src="cinqueterre.jpg" class="img-rounded" alt="Cinque Terre" width="304" height="236">${bean.image}
+					</td>
 					<td>
 						<a href="<%=MyCtrlCommand%>bkDetailView&bookcode=${bean.bookcode}">
 								${bean.name} ${bean.volume}권

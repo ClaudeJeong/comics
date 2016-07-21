@@ -12,7 +12,7 @@ public class BookDao extends SuperDao {
 	public int InsertData( Book bean ){
 		System.out.println( bean.toString() ); 
 		String sql = "insert into books(bookcode, name, volume, writer, publisher, pubdate, genre, image, bookstat, bookstory) " ;
-		sql += " values(seqprod.nextval, ?, ?, ?, ?, to_date(?, 'yyyy/MM/dd'), ?, ?, default, ?) " ;
+		sql += " values(bookseq.nextval, ?, ?, ?, ?, to_date(?, 'yyyy/MM/dd'), ?, ?, default, ?) " ;
 		PreparedStatement pstmt = null ;
 		int cnt = -99999 ;
 		try {
@@ -30,7 +30,7 @@ public class BookDao extends SuperDao {
 			String image = bean.getName() + " " + bean.getVolume();
 			pstmt.setString(7, image);
 			//pstmt.setString(8, bean.getBookstat());
-			pstmt.setString(9, bean.getBookstory());
+			pstmt.setString(8, bean.getBookstory());
 			
 			cnt = pstmt.executeUpdate() ; 
 			conn.commit(); 
