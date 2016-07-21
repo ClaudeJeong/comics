@@ -58,6 +58,57 @@ public class MemberDao extends SuperDao {
 
 		return bean;
 	}
+	
+	public List<Member> selectByName(String name) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member bean = new Member();
+		List<Member> lists = new ArrayList<Member>();
+		String sql = " select id, password, name, nickname, email1, email2, to_char(birth,'yyyy/MM/dd')as birth, gender, phone1, phone2, phone3, zipcode, address1, address2, to_char(regdate,'yyyy/MM/dd')as regdate from members ";
+			   
+				sql += " where name = ? ";
+		this.conn = getConn();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				bean.setAddress1(rs.getString("address1"));
+				bean.setAddress2(rs.getString("address2"));
+				bean.setBirth(rs.getString("birth"));
+				bean.setEmail1(rs.getString("email1"));
+				bean.setEmail2(rs.getString("email2"));
+				bean.setGender(rs.getString("gender"));
+				bean.setId(rs.getString("id"));
+				bean.setName(rs.getString("name"));
+				bean.setNickname(rs.getString("nickname"));
+				bean.setPassword(rs.getString("password"));
+				bean.setPhone1(rs.getString("phone1"));
+				bean.setPhone2(rs.getString("phone2"));
+				bean.setPhone3(rs.getString("phone3"));
+				bean.setRegDate(rs.getString("regdate"));
+				bean.setZipcode(rs.getString("zipcode"));
+				lists.add(bean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+				super.closeConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return lists;
+	}
 
 	public List<Zipcode> SelectZipcode(String dong) {
 		PreparedStatement pstmt = null;
@@ -343,6 +394,39 @@ public class MemberDao extends SuperDao {
 			}
 		}
 		return cnt ;
+	}
+
+	public int changePassword(String password, String id, String name) {
+		PreparedStatement pstmt = null;
+		String sql =" update members set password = ? ";
+			   sql += " where id = ? and name = ? ";
+		int cnt = -99999;
+		
+		try {
+			this.conn.setAutoCommit(false);
+			pstmt = this.conn.prepareStatement(sql);
+			pstmt.setString(1, password );
+			pstmt.setString(2, id);
+			pstmt.setString(3, name);
+			cnt = pstmt.executeUpdate();
+			this.conn.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				this.conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally{
+			try {
+			if( pstmt != null) { 
+				pstmt.close(); }
+			} catch (SQLException e) {
+				e.printStackTrace();
+			 }
+			super.closeConn();
+		}
+		return cnt;
 	}
 
 }
