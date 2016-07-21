@@ -1,4 +1,3 @@
-<%@page import="mypkg.model.BookDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="./../common/top.jsp"%>
@@ -44,10 +43,10 @@
 							<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>bkList" method="post">
 								<div class="form-group">
 									<select class="form-control" name="mode" id="mode">
-										<option value="all" selected="selected">-- 보류---------
-										<option value="name">책
-										<option value="company">책2
-										<option value="category">책3								
+										<option value="all" selected="selected">-- 검색---------
+										<option value="name">책 제목
+										<option value="company">닉네임
+										<option value="category">아이디					
 									</select>
 								</div>
 								<div class="form-group">
@@ -62,25 +61,27 @@
 						</td>
 					</tr>
 					<tr>
-						<th>표지</th>
-						<th>제목</th>
+						<th>북코드</th>
+						<th>책제목</th>
 						<th>작가</th>
-						<th>출판사</th>
-						<th>출판일</th>
+						<th>대여자(id)</th>
+						<th>대여 일자</th>
+						<th>반납 일자</th>
+						<th>연체 여부</th>
 					</tr>
 				</thead>
 				<c:forEach var="bean" items="${requestScope.lists}">
 				<tr>
+					<td>${bean.writer}</td>
 					<td>
-						<img src="<%=imageFolder%>${bean.image}" class="img-rounded" width="70" height="100">
-					</td>
-					<td>
-						<a href="<%=MyCtrlCommand%>bkDetailView&bookcode=${bean.bookcode}">
+						<a href="#">
 								${bean.name} ${bean.volume}권
 						</a>
 					</td>
 					<td>${bean.writer}</td>
 					<td>${bean.publisher}</td>
+					<td>${bean.pubdate}</td>
+					<td>${bean.pubdate}</td>
 					<td>${bean.pubdate}</td>
 				</tr>
 				</c:forEach>			

@@ -34,8 +34,9 @@
 				<div class="col-sm-<%=leftside%> col-sm-<%=leftside%>">
 					<table>
 						<tr>
-							<td><img src="#${bean.image}"
-								class="img-circle" width="200" height="200"></td>
+							<td>
+								<img src="<%=imageFolder%>${bean.image}" class="img-rounded" width="210" height="300">
+							</td>
 						</tr>
 					</table>
 				</div>

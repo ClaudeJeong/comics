@@ -12,6 +12,19 @@
 	String MyCtrlCommand = context + servPath +"?command=";
 	//out.print(MyCtrlCommand);
 %>
+<%
+	//가정 : 현재 어플리케이션 이름이 SpringShop이고, 이미지 업로드 폴더가 upload라고 가정하면
+	//웹 서버의 이미지를 올릴 경로는 다음과 같이 구한다.
+	//변수 url은 여러 군데서 사용되고 있어서 사용하지 못함
+	String myurl = request.getRequestURL().toString();
+	String uri = request.getRequestURI();
+	int idx = myurl.indexOf(uri);
+
+	//웹 서버의 이미지를 올릴 경로
+	String imagePath = "/images/";
+	String imageFolder = myurl.substring(0, idx) + context
+			+ imagePath;
+%>
 <%  
 	int whologin = 0;
 	try{
@@ -80,7 +93,7 @@
           <li><a href="<%=MyCtrlCommand%>bkList">전체 도서</a></li>
           <li><a href="#">신간 도서</a></li>
           <li><a href="#">인기 도서</a></li>
-          <li><a href="#">도서 등록(관리자)</a></li>
+          <li><a href="<%=MyCtrlCommand%>bkInsertForm">도서 등록(관리자)</a></li>
           <li><a href="#">도서 수정(관리자) </a></li> 
           <li><a href="#">도서 삭제(관리자)</a></li>   
         </ul>
@@ -101,6 +114,14 @@
           <li><a href="#">공지사항</a></li>
           <li><a href="#">리뷰</a></li>
           <li><a href="#">자유 게시판</a></li> 
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">도서 대여
+        <span class="caret"></span></a>
+         <ul class="dropdown-menu">
+          <li><a href="#">대여 관리(관리자)</a></li>
+          <li><a href="#">총 대여 목록(관리자) </a></li>
         </ul>
       </li>
     </ul>
