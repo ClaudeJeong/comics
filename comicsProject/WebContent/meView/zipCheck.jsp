@@ -35,7 +35,8 @@ function myzipcheck() {
 		return false;
 	}
 	var url = '<%=MyCtrlCommand%>meZipCheck';
-	window.open(url, 'mywin', 'height=150', 'width=300') ;
+	//self.location.assign(url);
+	window.open(url, 'mywin', 'height=150,width=300') ;
 }
 function selfClose() {
 		self.close();
@@ -71,10 +72,10 @@ function sendAddress(zipcode, address) {
 								value="${fn:trim(oneitem.sido)} ${fn:trim(oneitem.gugun)} ${fn:trim(oneitem.dong)} ${fn:trim(oneitem.bunji)}" />
 							<tr>
 								<td width="25%" align="center"><a href='#'
-									onclick="sendAddress('${oneitem.zipcode}', '${address}');">
+									onclick="sendAddress('${oneitem.zipcode}', '${address}');" >
 										${oneitem.zipcode} </a></td>
 								<td width="75%" align="left"><a href='#'
-									onclick="sendAddress('${oneitem.zipcode}', '${address}');">
+									onclick="sendAddress('${oneitem.zipcode}', '${address}');" >
 										${address} </a></td>
 							</tr>
 						</c:forEach>

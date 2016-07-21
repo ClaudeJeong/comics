@@ -205,7 +205,9 @@ function changeEmail(){
 
 function zipCheck(){
 	var url='<%=MyCtrlCommand%>meZipCheck';
-	window.open(url, 'mywin','height=600,width=720,status=yes,scrollbars=yes,resizable=no');
+	//var modalOptions = "dialogWidth: 600px; dialogHeight: 720px; center: yes; resizable: yes; status: no; scroll: no;";
+	//window.showModalDialog(url, null, modalOptions);
+	window.open(url, 'mywin', 'height=600,width=720,status=yes,scrollbars=yes,resizable=no');
 }
 $(document).ready(function() {
 	var reg = "";
@@ -245,11 +247,11 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 	$('#name').keyup(function() {
-		if ($('#name').val().length < 2) {
-		$('#namecheck').html("<span class='alert-danger'>2글자 이상 입력하세요</span>");
+		if ($('#name').val().length < 2 || $('#name').val().length > 11) {
+		$('#namecheck').html("<span class='alert-danger'>2글자 이상 10글자 이하 입력하세요</span>");
 		$("#falsename").val(false);
 	}else{
-		var reg=/^[가-힣][^\s]+$/;
+		var reg=/^[가-힣]+$/;
 		if($('#name').val().search(reg) == -1){
 			$('#namecheck').html("<span class='alert-danger'>공백없이 한글만 입력하세요</span>");
 			$("#falsename").val(false);
@@ -450,7 +452,7 @@ $(document).ready(function() {
    buttonText: '달력선택', //버튼 텍스트 표시
    buttonImage: './images/cale_bg.jpg', //이미지주소
    showOn: "both", //엘리먼트와 이미지 동시 사용(both,button)
-   yearRange: '1950:2030' //1990년부터 2020년까지
+   yearRange: '1950:2016' //1950년부터 2016년까지
   };
   $("#birth").datepicker(clareCalendar);
   $("img.ui-datepicker-trigger").attr("style","margin-left:5px; vertical-align:middle; cursor:pointer;"); //이미지버튼 style적용

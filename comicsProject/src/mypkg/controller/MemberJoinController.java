@@ -25,7 +25,7 @@ public class MemberJoinController implements SuperController {
 		bean.setBirth(request.getParameter("birth"));
 		bean.setEmail1(request.getParameter("email1"));
 		if(request.getParameter("email2").equals("selfwrite")){
-			bean.setEmail2("@" + request.getParameter("email3"));
+			bean.setEmail2(request.getParameter("email3"));
 		}else{
 			bean.setEmail2(request.getParameter("email2"));
 		}
@@ -44,11 +44,10 @@ public class MemberJoinController implements SuperController {
 			String url="main.jsp";
 			int cnt = -99999;
 			cnt = mDao.InsertData(bean);
-		
-		
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);		
+			String message = "회원가입 축하합니다";
+			request.setAttribute("message", message);
+			RequestDispatcher dispat = request.getRequestDispatcher(url);
+			dispat.forward(request, response);	
 	}
 	
 

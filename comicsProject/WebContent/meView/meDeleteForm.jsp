@@ -61,7 +61,7 @@ h4 {
 <div class="container">
     <div class="row">
     <form name="myform" id="myform">
-        <div class="col-sm-offset-3 col-sm-6" style="margin-top:15px; margin-left:15px;">
+        <div class="col-sm-offset-3 col-sm-6" style="margin-top:30px; margin-left:35px;">
             <div class="form-login">
             <h4>Good Bye~</h4>
             <input type="password" id="password" name="password" class="form-control input-sm chat-input" placeholder="비밀번호를 입력하세요" />
@@ -70,7 +70,7 @@ h4 {
             </br>
             <div class="wrapper">
             <span class="group-btn">     
-                <a href="<%=MyCtrlCommand%>meDelete" class="btn btn-primary btn-sm" onclick="return selfClose();">탈퇴하기<i class="fa fa-sign-in"></i></a>
+                <input type="button" class="btn btn-primary btn-sm" value="탈퇴하기" onclick="return selfClose();"><i class="fa fa-sign-in"></i></a>
             </span>
             </div>
             </div>
@@ -83,11 +83,14 @@ function selfClose(){
 	var password = document.myform.password.value;
 	var repassword = document.myform.repassword.value;
 	var sessionpass = ${sessionScope.loginfo.password};
-
 	if(password == repassword && password == sessionpass){
-		self.close();
+		window.returnValue = 'ok';
+		window.close();
 		return true;
 	}else{
+		</script>
+		<jsp:forward page=""></jsp:forward>
+		<script type="text/javascript">
 		alert("비밀번호를 확인해 주세요");
 		return false;
 	}

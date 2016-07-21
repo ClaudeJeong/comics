@@ -15,10 +15,8 @@ public class MemberLogoutController implements SuperController {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		
 		String url="main.jsp";
-		RequestDispatcher dispat =  request.getRequestDispatcher(url);
-		dispat.forward(request, response);
+		response.sendRedirect(url);
 	}
 
 }

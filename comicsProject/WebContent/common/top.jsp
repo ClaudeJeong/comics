@@ -16,10 +16,11 @@
 	int whologin = 0;
 	try{
 		Member loginfo = (Member)session.getAttribute("loginfo");
+		
 		if(loginfo.getId() == null || session.getAttribute("loginfo") == null){
 			whologin = 0; //노 접속
 			}else{
-				if(loginfo.getId().equals("admin")){
+				if(loginfo.getId().equals("comics")){
 					whologin = 2; //관리자 로그인
 				}else{
 					whologin = 1; //일반 유저 로그인
@@ -68,7 +69,7 @@
           <li><a href="<%=MyCtrlCommand%>meList">회원 리스트(관리자)</a></li>
           <li><a href="#">정보 수정</a></li>
           <li><a href="#">아이디/비밀번호 찾기</a></li> 
-          <li><a href="#" onclick="return byeMember();">회원 탈퇴</a></li>
+          <li><a href="<%=MyCtrlCommand%>meDelete" onclick="return byeMember()">회원 탈퇴</a></li>
           <li><a href="#">로그 아웃</a></li>
         </ul>
       </li>
@@ -105,24 +106,24 @@
     </ul>
 		<div class="collapse navbar-collapse" id="navbar-collapse-2">
           <ul class="nav navbar-nav navbar-right">
-             <c:if test="${empty sessionScope.loginfo }">
+             <c:if test="${empty sessionScope.loginfo}">
              <li>
               <a class="btn btn-default btn-outline btn-circle collapsed" href="<%=MyCtrlCommand%>meJoinForm" aria-expanded="false">Join us</a>
             </li>
             </c:if>
-            <c:if test="${not empty sessionScope.loginfo }">
+            <c:if test="${not empty sessionScope.loginfo}">
             <li>
             <div style="margin-top:12px">
             	 <font color="white" size="3px">${sessionScope.loginfo.id}님 환영합니다.</font>
             </div>
             </li>
             </c:if>
-            <c:if test="${empty sessionScope.loginfo }">
+            <c:if test="${empty sessionScope.loginfo}">
              <li>
               <a class="btn btn-default btn-outline btn-circle collapsed" data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2">Sign in</a>
             </li>
             </c:if>
-            <c:if test="${not empty sessionScope.loginfo }">
+            <c:if test="${not empty sessionScope.loginfo}">
             <li>
             <a href="<%=MyCtrlCommand%>meLogout">로그 아웃<span
 								class="glyphicon glyphicon-log-in"></span>
@@ -149,12 +150,21 @@
 </div>
 <script type="text/javascript">
 function byeMember(){
-		if(confirm("정말 탈퇴할꺼에요?ㅠㅠ")){
-			var url='<%=MyCtrlCommand%>meDeleteForm';
-			window.open(url, 'mywin','height=300,width=220,status=yes,scrollbars=yes,resizable=no');
+	if(confirm("정말 탈퇴할꺼에요?ㅠㅠ")){
+	var popOptions = "dialogWidth: 300px; dialogHeight: 350px; center: yes; resizable: yes; status: no; scroll: no;";
+	var url='<%=MyCtrlCommand%>meDeleteForm';
+	var vReturn = window.showModalDialog(url, window, popOptions);
+
+	if (vReturn == 'ok') {
+		return true;
+
+	} else {
+		return false;
+
+	}
 		}else{
-				return false;
-		}
+			return false;
+	} 
 }
 </script>
 </body>
