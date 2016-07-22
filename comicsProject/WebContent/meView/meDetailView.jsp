@@ -52,11 +52,11 @@
 						</tr>
 						<tr>
 							<td width="25%">전화번호</td>
-							<td width="75%">${bean.phone1} - ${bean.phone2} - ${bean.phone3}</td>
+							<td width="75%">${bean.phone1}-${bean.phone2}-${bean.phone3}</td>
 						</tr>
 						<tr>
 							<td width="25%">이메일</td>
-							<td width="75%">${bean.email1} @ ${bean.email2}</td>
+							<td width="75%">${bean.email1}@${bean.email2}</td>
 						</tr>
 						<tr>
 							<td width="25%">우편 번호</td>

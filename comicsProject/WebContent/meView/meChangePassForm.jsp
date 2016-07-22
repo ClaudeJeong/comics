@@ -9,6 +9,7 @@
 	String MyCtrlCommand = context + servPath +"?command=";
 %>
 <head>
+<base target="_self">
 <style type="text/css">
 .colorgraph {
   height: 5px;
@@ -49,7 +50,7 @@
 				<hr class="colorgraph">
 				<div class="row">
 					<div class="col-xs-6 col-sm-6 col-md-6">
-                        <input type="submit" class="btn btn-md btn-success btn-block" value="변경하기" onclick="chekPass()">
+                        <input type="submit" class="btn btn-md btn-success btn-block" value="변경하기" onclick="return chekPass()">
 					</div>
 				</div>
 			</fieldset>
@@ -74,7 +75,9 @@ function chekPass() {
     var name = window.dialogArguments['name'];
     $('#id').val(id);
     $('#name').val(name);
+    alert("비밀번호가 변경 되었습니다");
 	window.close();
+
 	return true;
 }
 </script>

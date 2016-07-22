@@ -17,8 +17,12 @@ public class MemberDao extends SuperDao {
 		String sql = " select id, password, name, nickname, email1, email2, to_char(birth,'yyyy/MM/dd')as birth, gender, phone1, phone2, phone3, zipcode, address1, address2, to_char(regdate,'yyyy/MM/dd')as regdate from members ";
 			   
 				sql += " where id = ? ";
-		this.conn = getConn();
+		
+				
 		try {
+			if(this.conn == null){
+				this.conn = getConn();
+			}
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
@@ -227,6 +231,7 @@ public class MemberDao extends SuperDao {
 				if (rs != null) {
 					rs.close();
 				}
+				super.closeConn();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -261,6 +266,7 @@ public class MemberDao extends SuperDao {
 				if (rs != null) {
 					rs.close();
 				}
+				super.closeConn();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -319,9 +325,9 @@ public class MemberDao extends SuperDao {
 		sql += " where ranking between ? and ? ";
 		List<Member> lists = new ArrayList<Member>();
 		try {
-			if (this.conn == null) {
+			//if (this.conn == null) {
 				this.conn = this.getConn();
-			}
+			//}
 			pstmt = this.conn.prepareStatement(sql);
 			pstmt.setInt(1, beginRow);
 			pstmt.setInt(2, endRow);
@@ -357,7 +363,7 @@ public class MemberDao extends SuperDao {
 				if (pstmt != null) {
 					pstmt.close();
 				}
-				this.closeConn();
+				super.closeConn();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
@@ -408,6 +414,49 @@ public class MemberDao extends SuperDao {
 			pstmt.setString(1, password );
 			pstmt.setString(2, id);
 			pstmt.setString(3, name);
+			cnt = pstmt.executeUpdate();
+			this.conn.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				this.conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally{
+			try {
+			if( pstmt != null) { 
+				pstmt.close(); }
+			} catch (SQLException e) {
+				e.printStackTrace();
+			 }
+			super.closeConn();
+		}
+		return cnt;
+	}
+
+	public int updateData(Member bean) {
+		PreparedStatement pstmt = null;
+		String sql =" update members set password = ?, nickname = ?, email1 = ?, email2 = ?,"; 
+			   sql += " birth = to_date(?, 'yyyy/MM/dd'), phone1 = ?, phone2 = ?, phone3 = ?,"; 
+			   sql += " zipcode = ?, address1 = ?, address2 = ? where id= ? ";
+		int cnt = -99999;
+		
+		try {
+			this.conn.setAutoCommit(false);
+			pstmt = this.conn.prepareStatement(sql);
+			pstmt.setString(1, bean.getPassword() );
+			pstmt.setString(2, bean.getNickname() );
+			pstmt.setString(3, bean.getEmail1() );
+			pstmt.setString(4, bean.getEmail2() );
+			pstmt.setString(5, bean.getBirth() );
+			pstmt.setString(6, bean.getPhone1() );
+			pstmt.setString(7, bean.getPhone2() );
+			pstmt.setString(8, bean.getPhone3() );
+			pstmt.setString(9, bean.getZipcode() );
+			pstmt.setString(10, bean.getAddress1() );
+			pstmt.setString(11, bean.getAddress2() );
+			pstmt.setString(12, bean.getId() );
 			cnt = pstmt.executeUpdate();
 			this.conn.commit();
 		} catch (SQLException e) {

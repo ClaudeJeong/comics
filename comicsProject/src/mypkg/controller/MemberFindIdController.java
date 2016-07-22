@@ -22,12 +22,16 @@ public class MemberFindIdController implements SuperController {
 		
 		MemberDao mDao = new MemberDao();
 		List<Member> lists = mDao.selectByName(name);
+		System.out.println("리스트" + lists); 
 		String message="";
 		if(lists.size() == 0 ){
 			message="이름과 이메일을 확인해주세요";
 			request.setAttribute("message", message);
 		}else{
 		for (Member bean : lists) {
+			String mail = bean.getEmail1() +"@" + bean.getEmail2();
+			System.out.println(mail.equals(email));
+			System.out.println(bean.getName().equals(name));
 			if(bean.getName().equals(name) && (bean.getEmail1() +"@" + bean.getEmail2()).equals(email)){
 				//일치하는 경우
 				message = bean.getId();

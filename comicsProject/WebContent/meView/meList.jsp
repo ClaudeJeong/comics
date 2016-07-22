@@ -57,8 +57,8 @@
 						<td>${bean.name}</td>
 						<td>${bean.nickname}</td>
 						<td>${bean.gender}</td>
-						<td>${bean.phone1} - ${bean.phone2} - ${bean.phone3} </td>
-						<td>${bean.email1} @ ${bean.email2} </td>
+						<td>${bean.phone1}-${bean.phone2}-${bean.phone3} </td>
+						<td>${bean.email1}@${bean.email2} </td>
 					</tr>
 				</c:forEach>				
 			</table>
