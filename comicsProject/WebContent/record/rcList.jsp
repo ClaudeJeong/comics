@@ -1,3 +1,4 @@
+<%@page import="mypkg.model.RecordDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="./../common/top.jsp"%>
@@ -14,7 +15,7 @@
 <title>BootStrap Sample</title>
 <script type="text/javascript">
 	function insertForm(){
-			location.href='<%=MyCtrlCommand%>prInsertForm';
+			location.href='<%=MyCtrlCommand%>rcInsertForm';
 	}
 	function search(){
 		if( $('#mode').val() == '-' ){
@@ -28,7 +29,7 @@
 	function searchAll(){
 		//$('#mode').val('-');
 		//$('#keyword').val('');
-		location.href='<%=MyCtrlCommand%>bkList';
+		location.href='<%=MyCtrlCommand%>rcList';
 	}
 </script>
 </head>
@@ -40,7 +41,7 @@
 				<thead>
 					<tr>
 						<td colspan="10" align="center">
-							<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>bkList" method="post">
+							<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>rcList" method="post">
 								<div class="form-group">
 									<select class="form-control" name="mode" id="mode">
 										<option value="all" selected="selected">-- 검색---------
@@ -61,28 +62,30 @@
 						</td>
 					</tr>
 					<tr>
+						<th>대여넘버</th>
 						<th>북코드</th>
 						<th>책제목</th>
 						<th>작가</th>
 						<th>대여자(id)</th>
 						<th>대여 일자</th>
 						<th>반납 일자</th>
-						<th>연체 여부</th>
+						<th>연체일</th>
 					</tr>
 				</thead>
 				<c:forEach var="bean" items="${requestScope.lists}">
 				<tr>
+					<td>${bean.recordnum}</td>
+					<td>${bean.bcode}</td>
+					<td>${bean.name} ${bean.volume}권</td>
 					<td>${bean.writer}</td>
 					<td>
 						<a href="#">
-								${bean.name} ${bean.volume}권
+								${bean.nickname} (${bean.mid})
 						</a>
 					</td>
-					<td>${bean.writer}</td>
-					<td>${bean.publisher}</td>
-					<td>${bean.pubdate}</td>
-					<td>${bean.pubdate}</td>
-					<td>${bean.pubdate}</td>
+					<td>${bean.lenddate}</td>
+					<td>${bean.returndate}</td>
+					<td>${bean.overdue}일</td>
 				</tr>
 				</c:forEach>			
 			</table>

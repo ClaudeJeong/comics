@@ -9,13 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import mypkg.model.Book;
 import mypkg.model.BookDao;
-import mypkg.model.JoinRecord;
+import mypkg.model.JoinRecord02;
 import mypkg.model.RecordDao;
 import mypkg.util.Paging;
 public class RecordListController implements SuperController{
 	@Override
 	public void doProcess(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("гого");
 		RecordDao rcdao = new RecordDao();
 		
 		String mode = request.getParameter("mode");
@@ -40,8 +41,8 @@ public class RecordListController implements SuperController{
 		
 		Paging pageInfo = new Paging(pageNumber, pageSize, totalCount, myurl, mode, keyword);
 		
-		List<JoinRecord> lists = rcdao.SelectDataList(pageInfo.getBeginRow(), pageInfo.getEndRow(), mode, keyword);
-		
+		//List<JoinRecord02> lists = rcdao.SelectDataList(pageInfo.getBeginRow(), pageInfo.getEndRow(), mode, keyword);
+		List<JoinRecord02> lists = rcdao.SelectDataList();
 		request.setAttribute("lists", lists);
 		request.setAttribute("pagingHtml", pageInfo.getPagingHtml());
 		request.setAttribute("pagingStatus", pageInfo.getPagingStatus());
