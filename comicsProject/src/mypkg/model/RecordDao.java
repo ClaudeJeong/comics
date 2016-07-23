@@ -160,39 +160,37 @@ public class RecordDao extends SuperDao {
 	
 	//아직 안함
 	//총 대여 현황을 보여주기 위함
-	public List<JoinRecord> SelectDataList(int beginRow, int endRow, String mode, String keyword) {
+	public List<JoinRecord02> SelectDataList() {
 		//랭킹을 이용하여 모든 데이터를 조회한다.
 		PreparedStatement pstmt = null ;
 		ResultSet rs = null ;
 			
-		String sql = "select bookcode, name, volume, writer, publisher, pubdate, genre, image, bookstat, bookstory, ranking "; 
-		sql += " from " ; 
-		sql += " ( " ;
-		sql += " select bookcode, name, volume, writer, publisher, pubdate, genre, image, bookstat, bookstory, rank() over( order by name asc ) as ranking " ;
-		sql += " from books " ;
-		sql += " ) " ;
-		sql += " where ranking between ? and ? " ; 
+		String sql = " select rc.recordnum, rc.bcode, bk.name, bk.volume, bk.writer, me.nickname, rc.mid, rc.lenddate, rc.returndate, ";
+		sql += " rc.returndate - rc.lenddate - rc.period as overdue ";
+		sql += " from(records rc inner join books bk ";
+		sql += " on rc.bcode=bk.bookcode) inner join members me ";
+		sql += " on rc.mid=me.id ";
 
-		List<JoinRecord> lists = new ArrayList<JoinRecord>() ;
+		List<JoinRecord02> lists = new ArrayList<JoinRecord02>() ;
 		try {
 			if( this.conn == null ){ this.conn = this.getConn() ; }			
 			pstmt = this.conn.prepareStatement(sql) ;
-			pstmt.setInt(1, beginRow);
-			pstmt.setInt(2, endRow); 
+			//pstmt.setInt(1, beginRow);
+			//pstmt.setInt(2, endRow); 
 				
 			rs = pstmt.executeQuery() ; 
 			while ( rs.next() ) {
-				JoinRecord bean = new JoinRecord() ; 
-			/*	bean.setBookcode( rs.getInt("bookcode") );
-				bean.setName( rs.getString("name") ); 
-				bean.setVolume( rs.getInt("volume") );
-				bean.setWriter( rs.getString("writer") );				
-				bean.setPublisher( rs.getString("publisher") );		
-				bean.setPubdate( String.valueOf( rs.getDate("pubdate"))) ;
-				bean.setGenre( rs.getString("genre") );
-				bean.setImage( rs.getString("image") );
-				bean.setBookstat( rs.getString("bookstat") );
-				bean.setBookstory( rs.getString("bookstory") );*/
+				JoinRecord02 bean = new JoinRecord02() ; 
+				bean.setRecordnum( rs.getInt("recordnum") );
+				bean.setBcode(rs.getInt("bcode"));
+				bean.setName( rs.getString("name"));
+				bean.setVolume(rs.getInt("volume"));
+				bean.setWriter( rs.getString("writer"));
+				bean.setNickname( rs.getString("nickname"));
+				bean.setMid( rs.getString("mid"));
+				bean.setLenddate( rs.getString("lenddate"));
+				bean.setReturndate( rs.getString("returndate"));
+				bean.setOverdue( rs.getString("overdue"));
 				
 				lists.add( bean ) ; 
 			}
