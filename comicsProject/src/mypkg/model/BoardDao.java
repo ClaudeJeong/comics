@@ -34,6 +34,7 @@ public class BoardDao extends SuperDao {
 				try {
 					if (pstmt != null) {pstmt.close();}
 					if ( rs != null) { rs.close();}
+					super.closeConn();
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}
@@ -61,9 +62,9 @@ public class BoardDao extends SuperDao {
 		sql += " where ranking between ? and ? ";
 		List<Board> lists = new ArrayList<Board>();
 		try {
-			if (this.conn == null) {
+			//if (this.conn == null) {
 				this.conn = this.getConn();
-			}
+			//}
 			pstmt = this.conn.prepareStatement(sql);
 			pstmt.setInt(1, beginRow);
 			pstmt.setInt(2, endRow);
@@ -102,4 +103,121 @@ public class BoardDao extends SuperDao {
 		}
 		return lists;
 }
+
+
+	public int insertData(Board bean) {
+		PreparedStatement pstmt = null ;
+		String sql = " insert into boards(no, boardtype, writer, subject, content, password, regdate, updatedate, readhit, remark)";
+			   sql += " values(boardnumseq.nextval, ?, ?, ?, ?, ?, default, default, default, null)"; 
+
+		int cnt = -99999 ;
+		try {
+			if( conn == null ){ super.conn = super.getConn(); }
+			conn.setAutoCommit( false );
+			pstmt = super.conn.prepareStatement(sql) ;
+			pstmt.setString(1, bean.getBoardType());
+			pstmt.setString(2, bean.getWriter()) ;
+			pstmt.setString(3, bean.getSubject()) ;
+			pstmt.setString(4, bean.getContent()) ;
+			pstmt.setString(5, bean.getPassword()) ;
+			
+			cnt = pstmt.executeUpdate() ; 
+			conn.commit(); 
+		} catch (Exception e) {
+			SQLException err = (SQLException)e ;			
+			cnt = - err.getErrorCode() ;			
+			e.printStackTrace();
+			try {
+				conn.rollback(); 
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		} finally{
+			try {
+				if( pstmt != null ){ pstmt.close(); }
+				super.closeConn(); 
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return cnt ;
+}
+
+
+	public Board selectDataByPk(String no) {
+		PreparedStatement pstmt = null ;
+		ResultSet rs = null ;				
+		String sql = "select * " ;
+		sql += " from boards " ; 
+		sql += " where no = ? " ;
+		Board bean = null ;
+		try {
+			if( this.conn == null ){ this.conn = this.getConn(); }			
+			pstmt = this.conn.prepareStatement(sql) ;			
+			pstmt.setInt( 1, Integer.parseInt(no) ); 
+			rs = pstmt.executeQuery() ; 
+			
+			if ( rs.next() ) { 
+				bean = new Board() ;
+				bean.setNo( rs.getInt("no") );				
+				bean.setSubject( rs.getString("subject") );
+				bean.setWriter( rs.getString("writer") );
+				bean.setPassword( rs.getString("password") );
+				bean.setContent( rs.getString("content") );
+				bean.setReadHit( rs.getInt("readhit") );				
+				bean.setRegDate( String.valueOf( rs.getDate("regdate"))) ;
+				bean.setBoardType(rs.getString("boardtype"));
+				bean.setRemark(rs.getString("remark"));
+				bean.setUpdateDate(String.valueOf( rs.getDate("updatedate")));
+			}
+			
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		} finally{
+			try {
+				if( rs != null){ rs.close(); } 
+				if( pstmt != null){ pstmt.close(); } 
+				super.closeConn();
+			} catch (Exception e2) {
+				e2.printStackTrace(); 
+			}
+		} 		
+		return bean  ;
+	}
+
+
+	public int UpdateReadhit(String no) {
+		PreparedStatement pstmt = null ;
+		String sql = " update boards set readhit = readhit + 1 " ;
+		sql += " where no=? " ;
+		
+		int cnt = -99999 ; //부정의 의미
+		try {
+			//if( this.conn == null ){ 
+				this.conn = this.getConn() ; 
+				//}
+			conn.setAutoCommit( false ); 
+			pstmt = this.conn.prepareStatement( sql ) ;
+			pstmt.setInt(1, Integer.parseInt(no)) ; 
+			cnt = pstmt.executeUpdate() ;
+			conn.commit(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+			cnt = -99999 ;
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally{
+			try {
+				if( pstmt != null ){ pstmt.close(); }
+				super.closeConn();
+			} catch (Exception e2) {
+				e2.printStackTrace(); 
+			}
+		}
+		return cnt ; 
+		
+	}
 }

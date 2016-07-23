@@ -44,9 +44,9 @@ BoardDao bDao = new BoardDao();
 		//System.out.println("토탈 카운터 : " + totalCount);
 		
 		String contextPath = request.getContextPath();
-		System.out.println("콘페스 : " + contextPath);
+		//System.out.println("콘페스 : " + contextPath);
 		String myurl = contextPath + "/ComicsCtrl?command=boList";
-		System.out.println("myurl : " + myurl );
+		//System.out.println("myurl : " + myurl );
 		Paging pageInfo = new Paging(
 										pageNumber, 
 										pageSize, 

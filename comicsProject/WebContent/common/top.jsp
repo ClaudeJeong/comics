@@ -10,7 +10,6 @@
 	String context = request.getContextPath();
 	String servPath = "/ComicsCtrl";
 	String MyCtrlCommand = context + servPath +"?command=";
-	//out.print(MyCtrlCommand);
 %>
 <%
 	//가정 : 현재 어플리케이션 이름이 SpringShop이고, 이미지 업로드 폴더가 upload라고 가정하면
@@ -24,6 +23,7 @@
 	String imagePath = "/images/";
 	String imageFolder = myurl.substring(0, idx) + context
 			+ imagePath;
+
 %>
 <%  
 	int whologin = 0;

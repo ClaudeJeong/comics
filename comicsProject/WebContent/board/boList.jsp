@@ -53,7 +53,9 @@
       <tr>
         <td>${bean.no}</td>
        	 <td>
-      	 	<a href="#">${bean.subject} </a>
+      	 	<a href="<%=MyCtrlCommand%>boNoticeDetail&no=${bean.no}&${requestScope.parameters}">
+      	 		${bean.subject}
+      	 	</a> 
        	 </td>
        
         <td>${bean.writer}</td>
@@ -91,6 +93,10 @@
 		
 		function searchAll(){
 			location.href='<%=MyCtrlCommand%>boList';
+		}
+		
+		function writeForm(){
+			location.href='<%=MyCtrlCommand%>boNoticeForm';
 		}
 	</script>
 </body>
