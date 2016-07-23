@@ -22,7 +22,7 @@ public class MemberFindIdController implements SuperController {
 		
 		MemberDao mDao = new MemberDao();
 		List<Member> lists = mDao.selectByName(name);
-		System.out.println("리스트" + lists); 
+		//System.out.println("리스트" + lists); 
 		String message="";
 		if(lists.size() == 0 ){
 			message="이름과 이메일을 확인해주세요";
@@ -30,11 +30,14 @@ public class MemberFindIdController implements SuperController {
 		}else{
 		for (Member bean : lists) {
 			String mail = bean.getEmail1() +"@" + bean.getEmail2();
-			System.out.println(mail.equals(email));
-			System.out.println(bean.getName().equals(name));
 			if(bean.getName().equals(name) && (bean.getEmail1() +"@" + bean.getEmail2()).equals(email)){
 				//일치하는 경우
-				message = bean.getId();
+				String id = bean.getId().substring(0, 2);
+				String star = "";
+				for (int i = 0; i < bean.getId().length() - 2; i++) {
+					star += "*";
+				}
+				message = "회원님의 아이디는 <font size=5px color='black'>" + id + star + "</font>입니다";
 				request.setAttribute("message", message);
 			}else{
 				//일치하지 않는 경우

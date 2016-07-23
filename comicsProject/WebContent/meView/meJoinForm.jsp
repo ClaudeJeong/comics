@@ -207,7 +207,7 @@ function changeEmail(){
 function zipCheck(){
 	var url='<%=MyCtrlCommand%>meZipCheck';
 	//var modalOptions = "dialogWidth: 600px; dialogHeight: 720px; center: yes; resizable: yes; status: no; scroll: no;";
-	//window.showModalDialog(url, null, modalOptions);
+	//window.showModalDialog(url, window, modalOptions);
 	window.open(url, 'mywin', 'height=600,width=720,status=yes,scrollbars=yes,resizable=no');
 }
 $(document).ready(function() {

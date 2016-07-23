@@ -17,6 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<base target="_self">
 <title>우편번호 검색</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -64,7 +65,7 @@ function sendAddress(zipcode, address) {
 									<input type="text" class="form-control" name="dong" id="dong"
 										placeholder="찾을 동 이름   예)중동">
 								</div>
-								<button class="btn btn-default" type="submit" onclick="return myzipcheck()">검색</button>
+								<button class="btn btn-default" type="submit" onclick="myzipcheck()">검색</button>
 							</td>
 						</tr>
 						<c:forEach items="${lists}" var="oneitem">

@@ -111,7 +111,7 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티
         <span class="caret"></span></a>
          <ul class="dropdown-menu">
-          <li><a href="#">공지사항</a></li>
+          <li><a href="<%=MyCtrlCommand%>boList">공지사항</a></li>
           <li><a href="#">리뷰</a></li>
           <li><a href="#">자유 게시판</a></li> 
         </ul>
