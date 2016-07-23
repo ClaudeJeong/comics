@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script type="text/javascript" src="./se2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="./editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -56,7 +56,7 @@ $(function(){
 						oAppRef: oEditors,
 						elPlaceHolder: "content",
 						//SmartEditor2Skin.html 파일이 존재하는 경로
-						sSkinURI: "./se2/SmartEditor2Skin.html",	
+						sSkinURI: "./editor/SmartEditor2Skin.html",	
 						htParams : {
 							// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
 							bUseToolbar : true,				
@@ -86,7 +86,7 @@ $(function(){
 					})
 
 });
-
+/* 
 //‘저장’ 버튼을 누르는 등 저장을 위한 액션을 했을 때 submitContents가 호출된다고 가정한다.
 function submitContents(elClickedObj) {
     // 에디터의 내용이 textarea에 적용된다.
@@ -108,7 +108,7 @@ function pasteHTML(filepath){
     alert(sHTML);
     oEditors.getById["content"].exec("PASTE_HTML", [sHTML]); 
 
-}
+} */
 </script>
 </body>
 </html>

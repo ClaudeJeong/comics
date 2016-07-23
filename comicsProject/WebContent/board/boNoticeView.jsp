@@ -49,7 +49,7 @@
 <div class="container col-sm-offset-2 col-sm-8">
 <hr class="colorgraph">
 <font size="3px" style="font-style: italic; font-weight: bold;">내용 :</font> <br> ${bean.content}
-<div style="margin-left: 430px;">
+<div style="margin-left: 430px; margin-top: 10px;">
 <input type="button" class="btn btn-info  btn-md" type="button" value="돌아가기" onclick="goback()">
 </div>
 </div>

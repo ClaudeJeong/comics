@@ -7,9 +7,11 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import mypkg.model.Board;
 import mypkg.model.BoardDao;
+import mypkg.model.Member;
 import mypkg.util.FlowParameters;
 
 public class BoardNoticeDetailController implements SuperController {
@@ -43,50 +45,36 @@ public class BoardNoticeDetailController implements SuperController {
 		BoardDao bDao = new BoardDao();
 		Board bean = bDao.selectDataByPk(no);
 		String url = "" ;
-		
-		// 1) bean.getWriter() : 작성자의 아이디 
-		// 2) 세션의 loginfo의 id
-		// 1)번과 2)번이 다르면 조회수 1증가
-		
-		/*String imsi1 = bean.getContent();
-		//System.out.println(imsi1);
-		//System.out.println("=======================================");
-		StringTokenizer token = new StringTokenizer(imsi1, "#");
-		//int i = 1;
-		//while(token.hasMoreTokens()){
-		imsi1 = token.nextToken();
-		StringTokenizer token2 = new StringTokenizer(imsi1, "#");
-		imsi1 = token2.nextToken("&");
-		imsi1 += "\">";
-		while(token.hasMoreTokens()){
-			imsi1 += token.nextToken();
-		}
-		System.out.println(imsi1);
-		bean.setContent(imsi1);*/
-		//}
-		//&#10; 부터 까지 both;  짜르고 ">를 붙인다.
+		HttpSession session = request.getSession();
+		Member mbean = (Member)session.getAttribute("loginfo");
 		
 		
-		if( bean != null){ //상세 보기로 이동
-			bDao.UpdateReadhit(no) ; //조회수 업데이트 
-			request.setAttribute("bean", bean);
-			url = "/board/boNoticeView.jsp";
-			
-			request.setAttribute("mode", mode);
-			request.setAttribute("keyword", keyword);
-			
-			request.setAttribute("parameters", parameters.toString());
+		if( mbean != null){ //상세 보기로 이동
+			if(!mbean.getNickname().equals(bean.getWriter())){
+				bDao.UpdateReadhit(no) ; //조회수 업데이트 
+				request.setAttribute("bean", bean);
+				url = "/board/boNoticeView.jsp";
+				request.setAttribute("mode", mode);
+				request.setAttribute("keyword", keyword);
+				request.setAttribute("parameters", parameters.toString());
+			}else{
+				request.setAttribute("bean", bean);
+				url = "/board/boNoticeView.jsp";
+				request.setAttribute("mode", mode);
+				request.setAttribute("keyword", keyword);
+				request.setAttribute("parameters", parameters.toString());
+			}
+				
 		}else{
 			request.setAttribute("bean", bean);
 			url = "/board/boNoticeView.jsp";
-			
 			request.setAttribute("mode", mode);
 			request.setAttribute("keyword", keyword);
-			
 			request.setAttribute("parameters", parameters.toString());
-		}		
+		}
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);		
+		dispatcher.forward(request, response);
 	}
 
 }

@@ -71,7 +71,7 @@ sFileInfo += "&sFileURL="+"/editor/multiupload/"+realFileNm;  */
 sFileInfo += "&sFileName=" + filename;
 //realFileNm = realFileNm.substring(realFileNm.indexOf("16")+1);
 //sFileInfo += "&sFileURL=http://localhost:8888/comicsProject/editor/multiupload/"+realFileNm;  
-sFileInfo += "&sFileURL="+rlFileNm;
+sFileInfo += "&sFileURL=" + "http://localhost:8888/comicsProject/editor/multiupload/" + realFileNm + "&";
 out.println(sFileInfo);
 }
 

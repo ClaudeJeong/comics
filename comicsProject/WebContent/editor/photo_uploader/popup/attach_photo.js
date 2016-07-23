@@ -334,7 +334,7 @@
     	var tempFile,
     		sUploadURL;
     	
-    	sUploadURL= './../../se2/photo_uploader/popup/file_uploader.jsp'; 	//upload URL
+    	sUploadURL= './../../../file_uploader_html5.jsp'; 	//upload URL
     	
     	//파일을 하나씩 보내고, 결과를 받음.
     	for(var j=0, k=0; j < nImageInfoCnt; j++) {
@@ -387,7 +387,7 @@
  	    		return ;
  	    	}
  			aTemp = sResString.split("&");
-	    	for (var i = 0; i < aTemp.length ; i++){
+	    	for (var i = 0; i < aTemp.length -1 ; i++){
 	    		if( !!aTemp[i] && aTemp[i] != "" && aTemp[i].indexOf("=") > 0){
 	    			aSubTemp = aTemp[i].split("=");
 	    			htTemp[aSubTemp[0]] = aSubTemp[1];
