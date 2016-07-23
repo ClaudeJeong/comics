@@ -91,8 +91,8 @@
         <span class="caret"></span></a>
          <ul class="dropdown-menu">
           <li><a href="<%=MyCtrlCommand%>bkList">전체 도서</a></li>
-          <li><a href="#">신간 도서</a></li>
-          <li><a href="#">인기 도서</a></li>
+          <li><a href="<%=MyCtrlCommand%>bkNewList">신간 도서</a></li>
+          <li><a href="<%=MyCtrlCommand%>bkHitList">인기 도서</a></li>
           <li><a href="<%=MyCtrlCommand%>bkInsertForm">도서 등록(관리자)</a></li>
           <li><a href="#">도서 수정(관리자) </a></li> 
           <li><a href="#">도서 삭제(관리자)</a></li>   
@@ -120,8 +120,8 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">도서 대여
         <span class="caret"></span></a>
          <ul class="dropdown-menu">
-          <li><a href="#">대여 관리(관리자)</a></li>
-          <li><a href="#">총 대여 목록(관리자) </a></li>
+          <li><a href="<%=MyCtrlCommand%>rcManage">대여 관리(관리자)</a></li>
+          <li><a href="<%=MyCtrlCommand%>rcList">총 대여 목록(관리자) </a></li>
         </ul>
       </li>
     </ul>
