@@ -72,6 +72,14 @@ BoardDao bDao = new BoardDao();
 		//상세보기, 수정, 삭제, 답글 등의 링크에 사용될 파라미터 리스트 문자열
 		request.setAttribute("parameters", parameters.toString());
 		
+		//메세지 토스
+		String message = (String)request.getAttribute("message");
+		if(message == null || message.equals("null") || message.equals("") ){
+			
+		}else{
+			request.setAttribute("message", message);
+		}
+		
 		String url="/board/boList.jsp?" + parameters.toString();
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

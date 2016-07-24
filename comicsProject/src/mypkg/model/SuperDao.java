@@ -24,14 +24,14 @@ public class SuperDao {
 	}
 	public void closeConn(){
 		//conn = null;
-		if (conn != null) {
+		//if (conn != null) {
 		try {
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}			
 	}
-	}
+	//}
 
 //Constructor
 	public SuperDao(){

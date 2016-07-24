@@ -1,7 +1,12 @@
+<%@page import="mypkg.model.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="./../common/top.jsp"%>
-
+<% 
+	Board bean = (Board)request.getAttribute("bean");
+	String con = bean.getContent();
+	
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,12 +18,12 @@
 </head>
 <body>
 <div class="container col-sm-offset-1 col-sm-10" style="margin-top: 50px;">
- <form id="myform" name="myform" action="<%=MyCtrlCommand%>boNoticeWrite" method="post" class="form-horizontal" role="form">
+ <form id="myform" name="myform" action="<%=MyCtrlCommand%>boNoticeUpdate&no=${bean.no}&${requestScope.parameters}" method="post" class="form-horizontal" role="form">
     <div class="form-group">
       <label class="control-label col-sm-2" for="email">제목:</label>
       <div class="col-sm-10">
         <input class="form-control" style="width: 70%;" type="text" id="subject" name="subject"
-				placeholder="제목을 입력하세요">
+				placeholder="제목을 입력하세요" value="${bean.subject}">
 				
 				
       </div>
@@ -27,7 +32,7 @@
       <label class="control-label col-sm-2" for="pwd">작성자:</label>
       <div class="col-sm-10 form-inline">          
 				 <input class="form-control" style="width: 20%;" type="text" id="writer" name="writer"
-				readonly="readonly" value="${sessionScope.loginfo.nickname}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>분류:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				readonly="readonly" value="${bean.writer}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>분류:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				 <input class="form-control" style="width: 20%;" type="text" id="boardtype" name="boardtype"
 				readonly="readonly" value="공지사항">
       </div>
@@ -42,9 +47,9 @@
     </div>
      <div class="form-group">
       <div class="col-sm-10" align="center" style="margin-left: 145px; margin-top:10px;">          
-         <input class="btn btn-info  btn-md" type="button" id="save" name="save" value="게시하기">
+         <input class="btn btn-info  btn-md" type="button" id="save" name="save" value="수정하기">
          &nbsp;&nbsp;&nbsp;
-		<input class="btn btn-info  btn-md" type="button" value="돌아가기" onclick="goback()">
+		<input class="btn btn-info  btn-md" type="button" value="취소하기" onclick="history.back()">
       </div>
       </div>
 <script type="text/javascript">
@@ -68,7 +73,7 @@ $(function(){
 						}, 
 						fOnAppLoad : function(){
 							//기존 저장된 내용의 text 내용을 에디터상에 뿌려주고자 할때 사용
-							oEditors.getById["content"].exec("PASTE_HTML", ['내용']);
+							oEditors.getById["content"].exec("PASTE_HTML", ['<%=con%>']);
 						},
 						fCreator: "createSEditor2"
 					});
@@ -84,9 +89,6 @@ $(function(){
 					})
 
 });
-function goback(){
-	location.href='<%=MyCtrlCommand%>boList&${requestScope.parameters}';
-}
 </script>
 </body>
 </html>
