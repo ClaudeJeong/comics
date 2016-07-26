@@ -18,7 +18,7 @@
 </head>
 <body>
 <div class="container col-sm-offset-1 col-sm-10" style="margin-top: 50px;">
- <form id="myform" name="myform" action="<%=MyCtrlCommand%>boNoticeUpdate&no=${bean.no}&${requestScope.parameters}" method="post" class="form-horizontal" role="form">
+ <form id="myform" name="myform" action="<%=MyCtrlCommand%>boNoticeUpdate&no=${bean.no}&boardtype=${bean.boardType}&${requestScope.parameters}" method="post" class="form-horizontal" role="form">
     <div class="form-group">
       <label class="control-label col-sm-2" for="email">제목:</label>
       <div class="col-sm-10">
@@ -34,7 +34,7 @@
 				 <input class="form-control" style="width: 20%;" type="text" id="writer" name="writer"
 				readonly="readonly" value="${bean.writer}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>분류:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				 <input class="form-control" style="width: 20%;" type="text" id="boardtype" name="boardtype"
-				readonly="readonly" value="공지사항">
+				readonly="readonly" value="${bean.boardType}">
       </div>
       
       </div>

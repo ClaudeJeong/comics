@@ -19,8 +19,13 @@ public class BoardDeleteController implements SuperController {
 		cnt = bDao.deleteData(no);
 		String message="게시글이 삭제 되었습니다.";
 		request.setAttribute("message", message);
-		
-		new BoardListController().doProcess(request, response);
+		String boardType = request.getParameter("boardtype");
+		if(boardType.equals("공지사항")){
+			new BoardListController().doProcess(request, response);
+		}else{
+			new BoardFreeListController().doProcess(request, response);
+		}
+	
 		
 	}
 

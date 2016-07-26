@@ -36,13 +36,12 @@
 
 <div align="right" style="margin-right:300px; margin-top:30px;">
 <font size="2px" style="font-weight:bold;">
-<c:if test="${ sessionScope.whologin == 2 }">
+<c:if test="${ sessionScope.loginfo.nickname == bean.writer }">
 <a href="<%=MyCtrlCommand%>boUpdateForm&no=${bean.no}&${requestScope.parameters}">수정</a>	&nbsp;&nbsp; 
-<a href="<%=MyCtrlCommand%>boDelete&no=${bean.no}&${requestScope.parameters}" onclick="return realDelete()">삭제</a>
+<a href="<%=MyCtrlCommand%>boDelete&no=${bean.no}&${requestScope.parameters}&boardtype=${bean.boardType}" onclick="return realDelete()">삭제</a>
 </c:if>
 </font>
 </div>
-
 
 <div class="container col-sm-offset-2 col-sm-8">
 <hr class="colorgraph">
@@ -65,21 +64,38 @@
 </div>
 
 <div class="form-group col-sm-offset-4 col-sm-4" style="margin-top: 50px;">
+
 <c:forEach var="lists" items="${requestScope.lists}">
+<form class="form-group" id="myform" name="myform" action="<%=MyCtrlCommand%>reMoreWrite&groupno=${lists.groupNo}&no=${bean.no}&orderno=${lists.orderNo}&writer=${sessionScope.loginfo.nickname}&depth=${lists.depth}&${requestScope.parameters}" method="post">
+<textarea name="morere" id="morere" style="width: 0px; height: 0px; visibility: hidden;"></textarea> 
 <table>
+
 <hr class="colorgraph" style="height: 2px;">
-<tr >
+<c:if test="${lists.depth > 0}">
+re:
+</c:if>
+<tr>
 	<td>작성자: ${lists.writer} &nbsp;&nbsp;&nbsp;&nbsp; </td>
-	<td>작성일: ${lists.regDate} &nbsp;&nbsp;&nbsp; </td>
-	<c:if test="${lists.regDate != lists.updateDate}">
-	<td>수정일: ${lists.updateDate} </td>
+	<td>작성일: ${lists.regDate} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+	<c:if test="${lists.writer == sessionScope.loginfo.nickname}">
+	<c:if test="${lists.writer != null}">
+	<td>
+		<a href="<%=MyCtrlCommand%>reDelete&renum=${lists.reNum}&no=${bean.no}&${requestScope.parameters}">삭제</a>
+		&nbsp;&nbsp;
+	</td>
 	</c:if>
-	<c:if test="${lists.regDate == lists.updateDate}">
-	<td>수정일: - </td>
+	</c:if>
+	<c:if test="${lists.writer != null}">
+	<td>
+            <input type="submit" value="댓글 쓰기"
+                onclick="return moreReply()" class="btn btn-danger btn-sm">
+	</td>
 	</c:if>
 </tr>
 </table>
+</form>
 <br>
+<div style="margin-top:-30px;">
 <table>
 <tr>
 	<td>내용: </td>
@@ -90,24 +106,54 @@
 	</td>
 </tr>
 </table>
-</c:forEach>
+</div>
+ </c:forEach>
+
 <div align="center">
 			${requestScope.pagingHtml}		
 		</div>
 </div>
-<form action="<%=MyCtrlCommand%>rewrite&no=${bean.no}&writer=${sessionScope.loginfo.nickname}&${requestScope.parameters}" method="post" >
+<form action="<%=MyCtrlCommand%>rewrite&no=${bean.no}&writer=${sessionScope.loginfo.nickname}&boardtype=${bean.boardType}&${requestScope.parameters}" method="post" >
 <div class="form-group col-sm-offset-4 col-sm-4" style="margin-top: 20px;">
   <label for="comment">댓글달기:</label>
   <textarea class="form-control" rows="5" id="reply" name="reply"></textarea>
   <input type="submit" class="btn btn-danger  btn-sm" type="button" value="댓글달기" style="margin-left: 445px; margin-top: 8px"
    			onclick="return goreply()"> &nbsp;&nbsp;<span id="lengthcheck"></span>
 </div>
+<input type="hidden" id="boardtype" name="boardtype" value="${param.boardtype}">
+	
 </form>
 
-
 <script type="text/javascript">
+
+function moreReply() {
+	var popOptions = "dialogWidth: 400px; dialogHeight: 250px; center: yes; resizable: yes; status: no; scroll: no;";
+	var url='<%=MyCtrlCommand%>reMoreReplyForm';
+	var vReturn = window.showModalDialog(url, window, popOptions);
+	var reply = vReturn;
+	//alert(reply);
+	$('#morere').val(reply);
+	$('#morere').attr('value', reply) ;
+	//document.myform.morere.value = reply;
+	//alert("하하하하");
+	
+	if (vReturn !='') {
+		return true;
+
+	} else {
+		return false;
+
+	} 
+
+	return false;
+}
+
 function goback(){
-	location.href='<%=MyCtrlCommand%>boList&${requestScope.parameters}';
+	if($('#boardtype').val() == '공지사항'){
+		location.href='<%=MyCtrlCommand%>boList&${requestScope.parameters}';
+	}else{
+		location.href='<%=MyCtrlCommand%>boFreeList&${requestScope.parameters}';
+	}
 }
 function realDelete() {
 	if(confirm("게시물을 삭제 하시겠습니까?")){

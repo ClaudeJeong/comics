@@ -13,11 +13,12 @@ import mypkg.model.BoardDao;
 import mypkg.util.FlowParameters;
 import mypkg.util.Paging;
 
-public class BoardListController implements SuperController {
+public class BoardFreeListController implements SuperController {
 
 	@Override
 	public void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 BoardDao bDao = new BoardDao();
 		
 		String mode = request.getParameter("mode"); //최초시작시 모드가 안넘어온다.
@@ -40,13 +41,13 @@ BoardDao bDao = new BoardDao();
 		parameters.setPageNumber(pageNumber);
 		parameters.setPageSize(pageSize);
 		//System.out.println(parameters.toString());
-		String boardType ="공지사항";
-		int totalCount = bDao.selectTotalCount(mode, keyword + "%", boardType); //1008
+		String boardType = "자유게시판";
+		int totalCount = bDao.selectTotalCount(mode, keyword + "%", boardType); 
 		//System.out.println("토탈 카운터 : " + totalCount);
 		
 		String contextPath = request.getContextPath();
 		//System.out.println("콘페스 : " + contextPath);
-		String myurl = contextPath + "/ComicsCtrl?command=boList";
+		String myurl = contextPath + "/ComicsCtrl?command=boFreeList";
 		//System.out.println("myurl : " + myurl );
 		Paging pageInfo = new Paging(
 										pageNumber, 
@@ -81,11 +82,9 @@ BoardDao bDao = new BoardDao();
 			request.setAttribute("message", message);
 		}
 		
-		String url="/board/boList.jsp?" + parameters.toString();
+		String url="/board/boFreeList.jsp?" + parameters.toString();
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}
 
-	}
-
-
+}

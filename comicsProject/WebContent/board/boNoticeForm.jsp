@@ -29,7 +29,7 @@
 				 <input class="form-control" style="width: 20%;" type="text" id="writer" name="writer"
 				readonly="readonly" value="${sessionScope.loginfo.nickname}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>분류:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				 <input class="form-control" style="width: 20%;" type="text" id="boardtype" name="boardtype"
-				readonly="readonly" value="공지사항">
+				readonly="readonly" value="${param.boardtype}">
       </div>
       
       </div>
@@ -39,6 +39,7 @@
          <textarea rows="10" cols="30" id="content" name="content" style="width:900px; height:612px; "></textarea>
       </div>
       </div>
+      </form>
     </div>
      <div class="form-group">
       <div class="col-sm-10" align="center" style="margin-left: 145px; margin-top:10px;">          
@@ -46,7 +47,9 @@
          &nbsp;&nbsp;&nbsp;
 		<input class="btn btn-info  btn-md" type="button" value="돌아가기" onclick="goback()">
       </div>
+      
       </div>
+      
 <script type="text/javascript">
 var oEditors = [];
 $(function(){
@@ -85,7 +88,13 @@ $(function(){
 
 });
 function goback(){
-	location.href='<%=MyCtrlCommand%>boList&${requestScope.parameters}';
+	alert($('#boardtype').val());
+	if($('#boardtype').val() == '공지사항'){
+		location.href='<%=MyCtrlCommand%>boList&${requestScope.parameters}';
+	}else{
+		location.href='<%=MyCtrlCommand%>boFreeList&${requestScope.parameters}';
+	}
+	
 }
 </script>
 </body>

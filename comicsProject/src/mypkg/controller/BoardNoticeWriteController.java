@@ -20,6 +20,7 @@ public class BoardNoticeWriteController implements SuperController {
 		String writer = request.getParameter("writer");
 		String boardtype = request.getParameter("boardtype");
 		String content = request.getParameter("content");
+		String boardType = request.getParameter("boardtype");
 		
 		Board bean = new Board();
 		bean.setBoardType(boardtype);
@@ -32,7 +33,11 @@ public class BoardNoticeWriteController implements SuperController {
 		int cnt = -99999;
 		cnt = bDao.insertData(bean);
 		
-		new BoardListController().doProcess(request, response);
+		if(boardtype.equals("공지사항")){
+			new BoardListController().doProcess(request, response);
+		}else{
+			new BoardFreeListController().doProcess(request, response);
+		}
 	}
 
 }

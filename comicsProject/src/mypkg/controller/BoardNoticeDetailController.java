@@ -79,11 +79,18 @@ public class BoardNoticeDetailController implements SuperController {
 		request.setAttribute("parameters", parameters.toString());
 		request.setAttribute("bean", bean);
 		//상세 보기로 이동
+		 boolean upReadHit = true;
+		try{
+			upReadHit = (boolean)request.getAttribute("upReadHit");	
+		}catch(NullPointerException e){
+			upReadHit = true;
+		}
 		Member mbean = (Member)session.getAttribute("loginfo");
+		
 		if( mbean != null){ 
-			if(!mbean.getNickname().equals(bean.getWriter())){
-				bDao.UpdateReadhit(no) ; //조회수 업데이트 
-				url = "/board/boNoticeView.jsp";
+			if(!mbean.getNickname().equals(bean.getWriter()) && upReadHit == true){
+					bDao.UpdateReadhit(no) ; //조회수 업데이트 
+					url = "/board/boNoticeView.jsp";
 			}else{
 				url = "/board/boNoticeView.jsp";
 			}

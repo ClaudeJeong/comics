@@ -14,16 +14,16 @@
 <body>
 
 <div class="container" style="margin-top: 20px">
-  <h2>공지사항</h2>
+  <h2>자유게시판</h2>
   <div class="table-responsive">          
   <table class="table">
     <thead>
     	<tr>
 					<td colspan="10" align="center">
-						<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>boList" method="post">
+						<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>boFreeList" method="post">
 							<div class="form-group">
 								<select class="form-control" name="mode" id="mode">
-									<option value="all" selected="selected">---선택하세요---
+									<option value="all" selected="selected">-- 선택하세요---------
 									<option value="writer">작성자
 									<option value="subject">제목
 									<option value="content">글 내용									
@@ -35,11 +35,9 @@
 							</div>
 							<button class="btn btn-default btn-warning" type="submit" onclick="search();">검색</button>
 							<button class="btn btn-default btn-warning" type="button" onclick="searchAll();">전체 검색</button>
-							<c:if test="${sessionScope.loginfo.nickname == '관리자'}">
 							<button class="btn btn-default btn-info" type="button"
 								onclick="writeForm();">글 쓰기</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							</c:if>	
 								<p class="form-control-static">${requestScope.pagingStatus}</p>
 						</form>
 					</td>
@@ -63,7 +61,6 @@
       	 		${bean.subject}
       	 	</a> 
        	 </td>
-       
         <td>${bean.writer}</td>
         <td>${bean.regDate}</td>
         <c:if test="${ bean.regDate == bean.updateDate}">
@@ -112,7 +109,7 @@
 		}
 		
 		function searchAll(){
-			location.href='<%=MyCtrlCommand%>boList';
+			location.href='<%=MyCtrlCommand%>boFreeList';
 		}
 		
 		function writeForm(){
@@ -120,4 +117,3 @@
 		}
 	</script>
 </body>
-</html>

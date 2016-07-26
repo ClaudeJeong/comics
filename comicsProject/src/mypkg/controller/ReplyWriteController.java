@@ -28,6 +28,9 @@ public class ReplyWriteController implements SuperController {
 		int	cnt = -99999;
 		cnt = rDao.InsertData(bean);
 		
+		boolean upReadHit = false;
+		request.setAttribute("upReadHit", upReadHit);
+		
 		//댓글을 가지고 와서 NoticeDetail컨트롤러로 넘긴다.
 		//request.setAttribute("rbean", bean);
 		new BoardNoticeDetailController().doProcess(request, response);

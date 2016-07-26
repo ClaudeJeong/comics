@@ -23,7 +23,8 @@
 	String imagePath = "/images/";
 	String imageFolder = myurl.substring(0, idx) + context
 			+ imagePath;
-
+	
+	String realPath = application.getRealPath(imagePath);
 %>
 <%  
 	int whologin = 0;
@@ -112,8 +113,8 @@
         <span class="caret"></span></a>
          <ul class="dropdown-menu">
           <li><a href="<%=MyCtrlCommand%>boList">공지사항</a></li>
-          <li><a href="#">리뷰</a></li>
-          <li><a href="#">자유 게시판</a></li> 
+          <li><a href="<%=MyCtrlCommand%>boReList">리뷰</a></li>
+          <li><a href="<%=MyCtrlCommand%>boFreeList">자유 게시판</a></li> 
         </ul>
       </li>
       <li class="dropdown">
@@ -135,7 +136,7 @@
             <c:if test="${not empty sessionScope.loginfo}">
             <li>
             <div style="margin-top:12px">
-            	 <font color="white" size="3px">${sessionScope.loginfo.id}님 환영합니다.</font>
+            	 <font color="white" size="3px">${sessionScope.loginfo.nickname}님 환영합니다.</font>
             </div>
             </li>
             </c:if>

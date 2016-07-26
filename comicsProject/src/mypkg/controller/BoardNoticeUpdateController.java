@@ -38,7 +38,13 @@ public class BoardNoticeUpdateController implements SuperController {
 		String message = "게시물이 수정되었습니다";
 		request.setAttribute("message", message);
 		request.setAttribute("parameters", parameters);
-		new BoardListController().doProcess(request, response);
+		String boardType = request.getParameter("boardtype");
+		if(boardType.equals("공지사항")){
+			new BoardListController().doProcess(request, response);
+		}else{
+			new BoardFreeListController().doProcess(request, response);
+		}
+	
 		
 	}
 

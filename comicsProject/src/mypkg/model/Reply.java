@@ -10,14 +10,24 @@ public class Reply {
 	private String updateDate;
 	private int orderNo;
 	private int depth;
+	private int groupNo;
 	
 //Method
+	
 	@Override
 	public String toString() {
-		return "Reply [reNum=" + reNum + ", boNum=" + boNum + ", writer=" + writer + ", content=" + content +
-				"orderNo=" + orderNo + ", depth=" + depth + "]";
+		return "Reply [reNum=" + reNum + ", boNum=" + boNum + ", writer=" + writer + ", content=" + content
+				+ ", regDate=" + regDate + ", updateDate=" + updateDate + ", orderNo=" + orderNo + ", depth=" + depth
+				+ ", groupNo=" + groupNo + "]";
 	}
 	
+	public int getGroupNo() {
+		return groupNo;
+	}
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
+	}
+
 	public int getReNum() {
 		return reNum;
 	}
