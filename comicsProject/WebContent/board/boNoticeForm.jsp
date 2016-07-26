@@ -76,8 +76,7 @@ $(function(){
 						fCreator: "createSEditor2"
 					});
 					$("#save").click(function(){
-						var subject = document.myform.subject.value;
-						if(subject.length == 0){
+						if($('#subject').val().length == 0){
 							alert("제목을 입력해주세요");
 						}else{
 							oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);

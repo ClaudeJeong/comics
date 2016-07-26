@@ -78,6 +78,8 @@ public class BoardNoticeDetailController implements SuperController {
 		request.setAttribute("keyword", keyword);
 		request.setAttribute("parameters", parameters.toString());
 		request.setAttribute("bean", bean);
+		String boardType="공지사항";
+		request.setAttribute("boardtype", boardType);
 		//상세 보기로 이동
 		 boolean upReadHit = true;
 		try{

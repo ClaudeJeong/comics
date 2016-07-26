@@ -35,8 +35,10 @@
 							</div>
 							<button class="btn btn-default btn-warning" type="submit" onclick="search();">검색</button>
 							<button class="btn btn-default btn-warning" type="button" onclick="searchAll();">전체 검색</button>
+							<c:if test="${sessionScope.whologin == 2}">
 							<button class="btn btn-default btn-info" type="button"
 								onclick="writeForm();">글 쓰기</button>
+							</c:if>	
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<p class="form-control-static">${requestScope.pagingStatus}</p>
 						</form>

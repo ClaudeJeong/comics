@@ -70,7 +70,7 @@
 					</div>	
 					<div class="form-group">
 						<div align="center" class="col-sm-offset-3 col-sm-6">
-							<button class="btn btn-default" type="submit">상품 등록</button>
+							<button class="btn btn-default" type="submit">등록하기</button>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<button class="btn btn-default" type="reset">취소</button>
 						</div>

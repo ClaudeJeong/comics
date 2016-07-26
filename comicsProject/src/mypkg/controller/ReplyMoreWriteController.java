@@ -24,12 +24,12 @@ public class ReplyMoreWriteController implements SuperController {
 		String morere = request.getParameter("morere"); //내용
 		String writer = request.getParameter("writer"); //작성자
 		
-		System.out.println(groupno);
+		/*System.out.println(groupno);
 		System.out.println(no);
 		System.out.println(orderno);
 		System.out.println(morere);
 		System.out.println(writer);
-		System.out.println(depth);
+		System.out.println(depth);*/
 		
 		Reply bean = new Reply();
 		bean.setContent(morere);

@@ -38,9 +38,11 @@ function mybooksearch() {
 	var url = '<%=MyCtrlCommand%>rcBookSearch';
 	//self.location.assign(url);
 	window.open(url, 'mywin', 'height=150,width=300') ;
+	
 }
 function selfClose() {
 		self.close();
+		
 }
 </script>	
 </head>
@@ -75,7 +77,7 @@ function selfClose() {
 											<input type="text" hidden="hidden" name="bcode" value="${oneitem.bookcode}" >
 											<input type="text" hidden="hidden" name="mid" value="${param.mid}" >
 										</div>
-										<button type="submit" class="btn btn-xs btn-default">대여</button>
+										<button type="submit" class="btn btn-xs btn-default" onclick="selfClose()">대여</button>
 										</form>									
 									</c:if>
 								</td>

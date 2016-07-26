@@ -22,7 +22,6 @@
 					<tr>
 						<td colspan="10" align="center">
 							<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>boReList" method="post">
-								<input type="hidden" name="command" value="boReList">
 								<div class="form-group">
 									<select class="form-control" name="mode" id="mode">
 										<option value="all" selected="selected">---선택하세요---
@@ -54,9 +53,16 @@
 				</thead>
 				<c:forEach var="bean" items="${requestScope.lists}">
 				<tr>
+					<c:if test="${bean.image == null}">
+					<td width="20%">
+						<img src="<%=imageFolder%>noimage.jpg" class="img-rounded" width="120" height="120">
+					</td>
+					</c:if>
+					<c:if test="${bean.image != null}">
 					<td width="20%">
 						<img src="<%=imageFolder%>${bean.image}" class="img-rounded" width="120" height="120">
 					</td>
+					</c:if>
 					<td>
 							${bean.content}
 					</td>
@@ -83,8 +89,12 @@
 		$('#keyword').val( '${requestScope.keyword}' ) ;
 		
 		function search(){
+			var aoao = $('#mode').val();
+			alert(aoao);
 			if( $('#mode').val() == 'all' ){
 				alert('검색 목록을 선택해주세요') ;
+			}else{
+				
 			}
 		}
 		

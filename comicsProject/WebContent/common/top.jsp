@@ -62,7 +62,7 @@
 	<div style="margin-top:20px; margin-left:600px">
 		<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>bkList" method="post">
 			<div class="form-group">
-				<select class="form-control" name="mode" id="mode">
+				<select class="form-control" name="mode2" id="mode2">
 					<option value="all" selected="selected">---검색---
 					<option value="name">책 제목
 					<option value="writer">작가
@@ -119,7 +119,7 @@
       </li>
       <c:if test="${whologin == 1}">
       	<li class="dropdown">
-       	 <a class="dropdown-toggle" data-toggle="dropdown" href="#">나의도서(로그인시)
+       	 <a class="dropdown-toggle" data-toggle="dropdown" href="#">나의도서
        	 <span class="caret"></span></a>
        	  <ul class="dropdown-menu">
        	   <li><a href="<%=MyCtrlCommand%>rcPersonalList&mid=${sessionScope.loginfo.id}">대여중인 도서</a></li>
@@ -175,8 +175,10 @@
             </c:if>
           </ul>
           <ul class="collapse nav navbar-nav nav-collapse" id="nav-collapse2">
+           
             <form class="navbar-form navbar-right form-inline" role="form"
             	action="<%=MyCtrlCommand%>meLogin" method="post">
+               <div style="margin-right: 20px;">
               <div class="form-group">
                 <label class="sr-only" for="ID">ID</label>
                 <input type="text" class="form-control" name="id" id="id" style="width:120px;" placeholder="id" autofocus required />
@@ -186,7 +188,9 @@
                 <input type="password" class="form-control" name="password" id="password" style="width:120px;" placeholder="Password" required />
               </div>
               <button type="submit" class="btn btn-success">로그인</button>
+            </div>
             </form>
+           
           </ul>
           </div>
 </nav>

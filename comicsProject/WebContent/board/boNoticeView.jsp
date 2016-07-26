@@ -3,6 +3,9 @@
 <%@ include file="./../common/top.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<% 
+	String boradtype = (String)request.getAttribute("boardtype");
+%> 
 <head>
 <style type="text/css">
 .colorgraph {
@@ -105,6 +108,7 @@ re:
 		${lists.content}
 	</td>
 </tr>
+
 </table>
 </div>
  </c:forEach>
@@ -120,7 +124,7 @@ re:
   <input type="submit" class="btn btn-danger  btn-sm" type="button" value="댓글달기" style="margin-left: 445px; margin-top: 8px"
    			onclick="return goreply()"> &nbsp;&nbsp;<span id="lengthcheck"></span>
 </div>
-<input type="hidden" id="boardtype" name="boardtype" value="${param.boardtype}">
+<input type="hidden" id="boardtype" name="boardtype" value="<%=boradtype%>">
 	
 </form>
 

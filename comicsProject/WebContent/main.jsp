@@ -25,7 +25,7 @@
 		var px=(sw - 150)/2 ;
 		var py=(sh - 100)/2 ;
 		var set  = 'top=' + py + ',left=' + px ;
-		 set += ',width=' + 150 + ',height=' + 100 + ',scrollbars=no,status=no,toolbar=no,resizable=no,location=no,menu=no';
+		 set += ',width=' + 250 + ',height=' + 100 + ',scrollbars=no,status=no,toolbar=no,resizable=no,location=no,menu=no';
 
 		window.open(url, "mywin", set) ;
 		</script>
