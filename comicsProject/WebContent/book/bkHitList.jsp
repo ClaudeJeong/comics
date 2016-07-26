@@ -36,19 +36,9 @@
 <body>
 	<div class="container col-sm-offset-<%=myoffset%> col-sm-<%=mywidth%>">
 		<div class="panel panel-default">
-			<div class="panel-heading"><h4>도서 목록</h4></div>
+			<div class="panel-heading"><h4>인기 도서 목록</h4></div>
 			<table class="table table-condensed table-hover">
 				<thead>
-					<tr>
-						<td colspan="10" align="right">
-							<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>bkList" method="post">
-								<button class="btn btn-default btn-warning" type="button" onclick="searchAll();">전체 검색</button>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<p class="form-control-static">${requestScope.pagingStatus}</p>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							</form>
-						</td>
-					</tr>
 					<tr>
 						<th>표지</th>
 						<th>제목</th>
@@ -60,6 +50,7 @@
 				</thead>
 				<c:forEach var="bean" items="${requestScope.lists}">
 				<tr>
+					
 					<td>
 						<img src="<%=imageFolder%>${bean.image}" class="img-rounded" width="70" height="100">
 					</td>
@@ -75,10 +66,7 @@
 				</tr>
 				</c:forEach>			
 			</table>
-		</div>
-		<div align="center">
-			<footer>${requestScope.pagingHtml}</footer>			
-		</div>		
+		</div>	
 	</div>
 </body>
 </html>

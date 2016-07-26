@@ -28,8 +28,11 @@ public class RecordInsertController implements SuperController {
 		int cnt = -99999;
 		cnt = rcdao.InsertData(mid, bcode);
 		
-		//리다이렉션시킨다.
-		new RecordManageDetailController().doProcess(request, response);
+		request.setAttribute("bcode", bcode);
+		
+		String url = "/record/rcBookSearch.jsp?" + "bcode=" +  bcode;
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		dispatcher.forward(request, response);
 	}
 	
 

@@ -511,9 +511,9 @@ public class RecordDao extends SuperDao {
 		}
 		int cnt = 0;
 		try {
-			//if (this.conn == null) {
+			if (this.conn == null) {
 				this.conn = this.getConn();
-			//}
+			}
 			pstmt = this.conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
 			rs = pstmt.executeQuery();

@@ -18,9 +18,9 @@
 </style>
 </head>
 <%
-	int myoffset = 2; //전체 외관의 옵셋
+	int myoffset = 1; //전체 외관의 옵셋
 	int mywidth = twelve - 2 * myoffset;
-	int leftside = 4; //판넬의 좌측
+	int leftside = 6; //판넬의 좌측
 	int rightside = twelve - leftside; //판넬의 우측
 %>
 <body>
@@ -35,7 +35,7 @@
 					<table>
 						<tr>
 							<td>
-								<img src="<%=imageFolder%>${bean.image}" class="img-rounded" width="210" height="300">
+								<img src="<%=imageFolder%>${bean.image}" class="img-rounded" width="280" height="400">
 							</td>
 						</tr>
 					</table>
@@ -79,19 +79,25 @@
 			<div class="panel-body">
 				<table class="table table-hover table-condensed">
 						<tr>
-							<th>시리즈</th>
-						</tr>
-						<tr>
-							<td>뭐 1권  뭐 2권</td>
-						</tr>
-				</table>
-				<table class="table table-hover table-condensed">
-						<tr>
 							<th>줄거리</th>
 						</tr>
 						<tr>
 							<td>${bean.bookstory}</td>
 						</tr>
+				</table>
+				<table class="table table-hover table-condensed">
+					<tr>
+						<th>시리즈</th>
+					</tr>
+					<c:forEach var="bean2" items="${requestScope.lists}">
+						<tr>
+							<td>
+								<a href="<%=MyCtrlCommand%>bkDetailView&bookcode=${bean2.bookcode}&name=${bean2.name}&writer=${bean2.writer}">
+									${bean2.name} ${bean2.volume}권
+								</a>
+							</td>
+						</tr>
+					</c:forEach>					
 				</table>
 				<table class="table table-hover table-condensed">
 						<tr>

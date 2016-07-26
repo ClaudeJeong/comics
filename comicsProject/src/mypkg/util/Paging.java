@@ -58,11 +58,78 @@ public class Paging {
 		this.pagingStatus = "총 " + totalCount + "건[" 
 				+ this.pageNumber + "/" + this.totalPage + "]" ;
 		
-		
-		
 		//this.DisplayInformation(); 
 	}
 	
+	public Paging(String _pageNumber, String _pageSize, int totalCount, String url, String mid, String mode, String keyword) {
+		if ( _pageNumber == null || _pageNumber.equals("null") || _pageNumber.equals("")) {
+			_pageNumber = "1" ; 
+		}
+		this.pageNumber = Integer.parseInt( _pageNumber ) ;
+		
+		if ( _pageSize == null || _pageSize.equals("null") || _pageSize.equals("")) {
+			_pageSize = "10" ; 
+		}
+		this.pageSize = Integer.parseInt( _pageSize ) ;
+		
+		this.totalCount = totalCount ;
+		this.url = url ;
+		this.mode = mode ;
+		this.keyword = keyword ; 
+		
+		this.totalPage = (int)Math.ceil((double)totalCount / pageSize) ;
+		
+		this.beginRow = ( pageNumber - 1 ) * pageSize + 1 ;
+		
+		this.endRow = this.pageNumber * this.pageSize  ;
+
+		this.beginPage = ( this.pageNumber -1 ) / this.pageCount * this.pageCount + 1 ;
+		
+		this.endPage = this.beginPage + this.pageCount - 1 ;  
+
+		if( this.totalPage < this.endPage ){ this.endPage = this.totalPage ;  } 
+		
+		this.pagingHtml = this.getRePagingHtml( url, mid ) ;
+		
+		this.pagingStatus = "총 " + totalCount + "건[" 
+				+ this.pageNumber + "/" + this.totalPage + "]" ;
+		
+		//this.DisplayInformation(); 
+	}
+	public Paging(String _pageNumber, String _pageSize, int totalCount, String url) {
+		if ( _pageNumber == null || _pageNumber.equals("null") || _pageNumber.equals("")) {
+			_pageNumber = "1" ; 
+		}
+		this.pageNumber = Integer.parseInt( _pageNumber ) ;
+		
+		if ( _pageSize == null || _pageSize.equals("null") || _pageSize.equals("")) {
+			_pageSize = "10" ; 
+		}
+		this.pageSize = Integer.parseInt( _pageSize ) ;
+		
+		this.totalCount = totalCount ;
+		this.url = url ;
+		
+		this.totalPage = (int)Math.ceil((double)totalCount / pageSize) ;
+		
+		this.beginRow = ( pageNumber - 1 ) * pageSize + 1 ;
+		
+		this.endRow = this.pageNumber * this.pageSize  ;
+
+		this.beginPage = ( this.pageNumber -1 ) / this.pageCount * this.pageCount + 1 ;
+		
+		this.endPage = this.beginPage + this.pageCount - 1 ;  
+
+		if( this.totalPage < this.endPage ){ this.endPage = this.totalPage ;  } 
+		
+		this.pagingHtml = this.getPagingHtml( url ) ;
+		
+		this.pagingStatus = "총 " + totalCount + "건[" 
+				+ this.pageNumber + "/" + this.totalPage + "]" ;
+	
+		
+		//this.DisplayInformation(); 
+	}
 	
 	public Paging(String _pageNumber, String _pageSize, int totalCount, String url, int no) {
 		if ( _pageNumber == null || _pageNumber.equals("null") || _pageNumber.equals("")) {
@@ -185,6 +252,49 @@ public class Paging {
 		result += "</ul>"; 
 		return result ;
 	}	
+	
+	private String getRePagingHtml( String url, String mid ){ //페이징 문자열을 만든다.
+		String result = "" ;
+		
+		//add_param 변수 : 검색 관련하여 추가되는 파라미터 리스트
+		String add_param = "&mode=" + mode + "&keyword=" + keyword ; 
+		
+		result += "<ul class='pagination" + paginationSize + "'>";
+		if ( pageNumber <= pageCount ) {//1부터 10페이지까지는 [맨처음]과 [이전]이 없다 
+			//result += "맨처음&nbsp;&nbsp;";
+			//result += "이전&nbsp;&nbsp;";			
+		} else {
+			result += "<li><a href='" + url + "&pageNumber=" + 1 + 
+				"&pageSize=" + pageSize + "&mid=" + mid + add_param + "'>맨처음</a></li>&nbsp;&nbsp;";
+			
+			result += "<li><a href='" + url + "&pageNumber=" + (beginPage - 1) + 
+				"&pageSize=" + pageSize + "&mid=" + mid + add_param + "'>이전</a></li>&nbsp;&nbsp;";
+		}		
+		//페이지 시작 번호 부터 ~ 끝 번호 까지 표시
+		
+		for (int i = beginPage ; i <= endPage ; i++) {
+			if(i == pageNumber){ //현재 페이지이면 링크는 없고, 빨간색으로 표시
+				result += "<li class='active'><a><font color='red'><b>" + i + "</b></font></a></li>&nbsp;";
+			}else{
+				result += "<li><a href='" + url + "&pageNumber=" + i + 
+					"&pageSize=" + pageSize + "&mid=" + mid + add_param + "'>" + i + "</li></a>&nbsp;";	
+			}			
+		}
+		
+		//마지막에는 [다음]과 [맨끝]이 없다
+		if ( pageNumber >= (totalPage / pageCount * pageCount + 1) ) {
+			//result += "다음&nbsp;&nbsp;";
+			//result += "맨 끝&nbsp;&nbsp;";	
+		} else {			
+			result += "<li><a href='" + url + "&pageNumber=" + (endPage + 1) + 
+				"&pageSize=" + pageSize + "&mid=" + mid + add_param + "'>다음</a></li>&nbsp;&nbsp;";
+			
+			result += "<li><a href='" + url + "&pageNumber=" + totalPage + 
+				"&pageSize=" + pageSize + "&mid=" + mid + add_param + "'>맨 끝</a></li>";
+		}
+		result += "</ul>"; 
+		return result ;
+	}
 
 	private void DisplayInformation() {
 		System.out.println("총 레코드 건수 : " + totalCount + "\n");
