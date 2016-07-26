@@ -10,7 +10,6 @@
 	String context = request.getContextPath();
 	String servPath = "/ComicsCtrl";
 	String MyCtrlCommand = context + servPath +"?command=";
-	//out.print(MyCtrlCommand);
 %>
 <%
 	//가정 : 현재 어플리케이션 이름이 SpringShop이고, 이미지 업로드 폴더가 upload라고 가정하면
@@ -24,6 +23,8 @@
 	String imagePath = "/images/";
 	String imageFolder = myurl.substring(0, idx) + context
 			+ imagePath;
+	
+	String realPath = application.getRealPath(imagePath);
 %>
 <%  
 	int whologin = 0;
@@ -131,8 +132,8 @@
         <span class="caret"></span></a>
          <ul class="dropdown-menu">
           <li><a href="<%=MyCtrlCommand%>boList">공지사항</a></li>
-          <li><a href="#">리뷰</a></li>
-          <li><a href="#">자유 게시판</a></li> 
+          <li><a href="<%=MyCtrlCommand%>boReList">리뷰</a></li>
+          <li><a href="<%=MyCtrlCommand%>boFreeList">자유 게시판</a></li> 
         </ul>
       </li>
       <c:if test="${whologin == 2}">
@@ -156,7 +157,7 @@
             <c:if test="${not empty sessionScope.loginfo}">
             <li>
             <div style="margin-top:12px">
-            	 <font color="white" size="3px">${sessionScope.loginfo.id}님 환영합니다.</font>
+            	 <font color="white" size="3px">${sessionScope.loginfo.nickname}님 환영합니다.</font>
             </div>
             </li>
             </c:if>

@@ -12,6 +12,11 @@ public class FlowParameters {
 				+ pageSize + "&mode=" + mode + "&keyword=" + keyword + "";
 	}
 	
+	public String replyParam() {
+		return "pageNumber=" + pageNumber + "&pageSize="
+				+ pageSize;
+	}
+	
 	/*@Override
 	public String toString() {
 		return "pageNumber=" + pageNumber + "&pageSize="

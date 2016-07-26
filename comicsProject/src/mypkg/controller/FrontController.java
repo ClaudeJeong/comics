@@ -79,13 +79,14 @@ public class FrontController extends HttpServlet implements SuperController {
 		String command = request.getParameter("command");
 		ServletContext context = getServletContext();
 		//System.out.println("getServletContext();는 머지 ?" + context);
+		//System.out.println("커맨드" + command);
 		if (command == null) {
-			String uploadedPath = context.getRealPath("/upload");
+			String uploadedPath = context.getRealPath("/images");
 			//System.out.println("getRealPath(/upload);는 머지? " + uploadedPath);
 
 			MultipartRequest multi = MyFileUpload.getMulti(request, uploadedPath);
 			if (multi != null) {
-
+				//System.out.println("멀티업로드");
 				command = multi.getParameter("command");
 				request.setAttribute("multi", multi);
 				request.setAttribute("uploadedPath", uploadedPath);

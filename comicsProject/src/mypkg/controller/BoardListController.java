@@ -40,13 +40,14 @@ BoardDao bDao = new BoardDao();
 		parameters.setPageNumber(pageNumber);
 		parameters.setPageSize(pageSize);
 		//System.out.println(parameters.toString());
-		int totalCount = bDao.selectTotalCount(mode, keyword + "%"); //1008
+		String boardType ="공지사항";
+		int totalCount = bDao.selectTotalCount(mode, keyword + "%", boardType); //1008
 		//System.out.println("토탈 카운터 : " + totalCount);
 		
 		String contextPath = request.getContextPath();
-		System.out.println("콘페스 : " + contextPath);
+		//System.out.println("콘페스 : " + contextPath);
 		String myurl = contextPath + "/ComicsCtrl?command=boList";
-		System.out.println("myurl : " + myurl );
+		//System.out.println("myurl : " + myurl );
 		Paging pageInfo = new Paging(
 										pageNumber, 
 										pageSize, 
@@ -56,7 +57,7 @@ BoardDao bDao = new BoardDao();
 										keyword );
 		
 		List<Board> lists = bDao.SelectDataList(pageInfo.getBeginRow(), pageInfo.getEndRow()
-				,mode, keyword + "%");
+				,mode, keyword + "%", boardType);
 		
 		request.setAttribute("lists", lists); //표로 보여지는 컬렉션
 		
@@ -71,6 +72,14 @@ BoardDao bDao = new BoardDao();
 		
 		//상세보기, 수정, 삭제, 답글 등의 링크에 사용될 파라미터 리스트 문자열
 		request.setAttribute("parameters", parameters.toString());
+		request.setAttribute("boardtype", boardType);
+		//메세지 토스
+		String message = (String)request.getAttribute("message");
+		if(message == null || message.equals("null") || message.equals("") ){
+			
+		}else{
+			request.setAttribute("message", message);
+		}
 		
 		String url="/board/boList.jsp?" + parameters.toString();
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
