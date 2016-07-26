@@ -1,4 +1,4 @@
-<%@page import="mypkg.model.BookDao"%>
+<%@page import="mypkg.model.RecordDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="./../common/top.jsp"%>
@@ -15,7 +15,7 @@
 <title>BootStrap Sample</title>
 <script type="text/javascript">
 	function insertForm(){
-			location.href='<%=MyCtrlCommand%>prInsertForm';
+			location.href='<%=MyCtrlCommand%>rcInsertForm';
 	}
 	function search(){
 		if( $('#mode').val() == '-' ){
@@ -29,49 +29,53 @@
 	function searchAll(){
 		//$('#mode').val('-');
 		//$('#keyword').val('');
-		location.href='<%=MyCtrlCommand%>bkList';
+		location.href='<%=MyCtrlCommand%>rcList';
 	}
 </script>
 </head>
 <body>
 	<div class="container col-sm-offset-<%=myoffset%> col-sm-<%=mywidth%>">
 		<div class="panel panel-default">
-			<div class="panel-heading"><h4>도서 목록</h4></div>
+			<div class="panel-heading"><h4>${sessionScope.loginfo.nickname}님의 히스토리</h4></div>
 			<table class="table table-condensed table-hover">
 				<thead>
 					<tr>
-						<td colspan="10" align="right">
-							<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>bkList" method="post">
+						<td colspan="10" align="center">
+							<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>rcList" method="post">
+								<div class="form-group">
+									<select class="form-control" name="mode" id="mode">
+										<option value="all" selected="selected">-- 검색---------
+										<option value="name">책 제목			
+									</select>
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control btn-xs" name="keyword"
+										id="keyword" placeholder="검색 키워드">
+								</div>
+								<button class="btn btn-default btn-warning" type="submit" onclick="search();">검색</button>
 								<button class="btn btn-default btn-warning" type="button" onclick="searchAll();">전체 검색</button>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<p class="form-control-static">${requestScope.pagingStatus}</p>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<p class="form-control-static">${requestScope.pagingStatus}</p>
 							</form>
 						</td>
 					</tr>
 					<tr>
-						<th>표지</th>
-						<th>제목</th>
+						<th>북코드</th>
+						<th>책제목</th>
 						<th>작가</th>
-						<th>출판사</th>
-						<th>출판일</th>
-						<th>대출 상태</th>
+						<th>대여 일자</th>
+						<th>반납 일자</th>
+						<th>연체일</th>
 					</tr>
 				</thead>
 				<c:forEach var="bean" items="${requestScope.lists}">
 				<tr>
-					<td>
-						<img src="<%=imageFolder%>${bean.image}" class="img-rounded" width="70" height="100">
-					</td>
-					<td>
-						<a href="<%=MyCtrlCommand%>bkDetailView&bookcode=${bean.bookcode}">
-								${bean.name} ${bean.volume}권
-						</a>
-					</td>
+					<td>${bean.bcode}</td>
+					<td>${bean.name} ${bean.volume}권</td>
 					<td>${bean.writer}</td>
-					<td>${bean.publisher}</td>
-					<td>${bean.pubdate}</td>
-					<td>${bean.bookstat}</td>
+					<td>${bean.lenddate}</td>
+					<td>${bean.returndate}</td>
+					<td>${bean.overdue}일</td>
 				</tr>
 				</c:forEach>			
 			</table>

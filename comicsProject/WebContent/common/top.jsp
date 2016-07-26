@@ -30,7 +30,7 @@
 	try{
 		Member loginfo = (Member)session.getAttribute("loginfo");
 		
-		if(loginfo.getId() == null || session.getAttribute("loginfo") == null){
+		if(loginfo == null){
 			whologin = 0; //노 접속
 			}else{
 				if(loginfo.getId().equals("comics")){
@@ -44,7 +44,6 @@
 		
 	}
 %>
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -59,31 +58,50 @@
 <title>## 만화책 도서관 ##</title>
 </head>
 <body>
-<div style="margin-top:20px; margin-left:600px">
- <form class="form-group" role="search""
-            	action="#">
-              <div class="form-inline">
-                <input type="text" class="form-control" placeholder="Search" style="width:400px;" />
-                <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-              </div>
-            </form>
-</div>
+	<div style="margin-top:20px; margin-left:600px">
+		<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>bkList" method="post">
+			<div class="form-group">
+				<select class="form-control" name="mode" id="mode">
+					<option value="all" selected="selected">---검색---
+					<option value="name">책 제목
+					<option value="writer">작가
+					<option value="publisher">출판사						
+				</select>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" name="keyword"
+										id="keyword" placeholder="Search" style="width:400px;" >
+			</div>	
+			<button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+			
+		</form>
+	</div>
 <div class="container-fluid" style="margin-top:20px">
 <nav class="navbar navbar-inverse">
  	<div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1"></button>
-          <a class="navbar-brand" href="main.jsp">All About Comics</a>
+          <a class="navbar-brand" href="main.jsp">만화 도서관</a>
     </div>
     <ul class="nav navbar-nav" style="margin-left:100px;">
       <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">회원(로그인시)
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">회원
         <span class="caret"></span></a>
          <ul class="dropdown-menu">
-          <li><a href="<%=MyCtrlCommand%>meList">회원 리스트(관리자)</a></li>
-          <li><a href="<%=MyCtrlCommand%>meUpdateForm&id=${sessionScope.loginfo.id}">정보 수정</a></li>
-          <li><a href="<%=MyCtrlCommand%>meFindIdPassForm">아이디/비밀번호 찾기</a></li> 
-          <li><a href="<%=MyCtrlCommand%>meDelete" onclick="return byeMember()">회원 탈퇴</a></li>
-          <li><a href="<%=MyCtrlCommand%>meLogout">로그 아웃</a></li>
+          <li><c:if test="${whologin == 2}">
+          	<a href="<%=MyCtrlCommand%>meList">회원 리스트(관리자)</a>
+          </c:if></li>
+          <li><c:if test="${whologin != 0}">
+          	<a href="<%=MyCtrlCommand%>meUpdateForm&id=${sessionScope.loginfo.id}">정보 수정</a>
+          </c:if></li>
+          <li><c:if test="${whologin == 0}">
+         	 <a href="<%=MyCtrlCommand%>meFindIdPassForm">아이디/비밀번호 찾기</a>
+          </c:if></li> 
+          <li><c:if test="${whologin == 1}">
+         	 <a href="<%=MyCtrlCommand%>meDelete" onclick="return byeMember()">회원 탈퇴</a>
+          </c:if></li>
+          <li><c:if test="${whologin != 0}">
+          	<a href="<%=MyCtrlCommand%>meLogout">로그 아웃</a>
+          </c:if></li>
         </ul>
       </li>
       <li class="dropdown">
@@ -93,20 +111,21 @@
           <li><a href="<%=MyCtrlCommand%>bkList">전체 도서</a></li>
           <li><a href="<%=MyCtrlCommand%>bkNewList">신간 도서</a></li>
           <li><a href="<%=MyCtrlCommand%>bkHitList">인기 도서</a></li>
-          <li><a href="<%=MyCtrlCommand%>bkInsertForm">도서 등록(관리자)</a></li>
-          <li><a href="#">도서 수정(관리자) </a></li> 
-          <li><a href="#">도서 삭제(관리자)</a></li>   
+          <li><c:if test="${whologin == 2}">
+          	<a href="<%=MyCtrlCommand%>bkInsertForm">도서 등록(관리자)</a>
+          </c:if></li>
         </ul>
       </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">나의도서(로그인시)
-        <span class="caret"></span></a>
-         <ul class="dropdown-menu">
-          <li><a href="#">대여중인 도서</a></li>
-          <li><a href="#">예약한 도서</a></li>
-          <li><a href="#">히스토리</a></li> 
-        </ul>
-      </li>
+      <c:if test="${whologin == 1}">
+      	<li class="dropdown">
+       	 <a class="dropdown-toggle" data-toggle="dropdown" href="#">나의도서(로그인시)
+       	 <span class="caret"></span></a>
+       	  <ul class="dropdown-menu">
+       	   <li><a href="<%=MyCtrlCommand%>rcPersonalList&mid=${sessionScope.loginfo.id}">대여중인 도서</a></li>
+       	   <li><a href="<%=MyCtrlCommand%>rcPersonalHistory&mid=${sessionScope.loginfo.id}">히스토리</a></li> 
+       	 </ul>
+      	</li>
+      </c:if>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">커뮤니티
         <span class="caret"></span></a>
@@ -116,20 +135,22 @@
           <li><a href="#">자유 게시판</a></li> 
         </ul>
       </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">도서 대여
-        <span class="caret"></span></a>
-         <ul class="dropdown-menu">
-          <li><a href="<%=MyCtrlCommand%>rcManage">대여 관리(관리자)</a></li>
-          <li><a href="<%=MyCtrlCommand%>rcList">총 대여 목록(관리자) </a></li>
-        </ul>
-      </li>
+      <c:if test="${whologin == 2}">
+      	<li class="dropdown">
+        	<a class="dropdown-toggle" data-toggle="dropdown" href="#">도서 대여
+        		<span class="caret"></span></a>
+         	<ul class="dropdown-menu">
+          		<li><a href="<%=MyCtrlCommand%>rcManage">대여 관리(관리자)</a></li>
+          		<li><a href="<%=MyCtrlCommand%>rcList">총 대여 목록(관리자)</a></li>
+        	</ul>
+      	</li>
+      </c:if>
     </ul>
 		<div class="collapse navbar-collapse" id="navbar-collapse-2">
           <ul class="nav navbar-nav navbar-right">
              <c:if test="${empty sessionScope.loginfo}">
              <li>
-              <a class="btn btn-default btn-outline btn-circle collapsed" href="<%=MyCtrlCommand%>meJoinForm" aria-expanded="false">Join us</a>
+              <a class="btn btn-default btn-outline btn-circle collapsed" href="<%=MyCtrlCommand%>meJoinForm" aria-expanded="false">회원 가입</a>
             </li>
             </c:if>
             <c:if test="${not empty sessionScope.loginfo}">
@@ -141,7 +162,7 @@
             </c:if>
             <c:if test="${empty sessionScope.loginfo}">
              <li>
-              <a class="btn btn-default btn-outline btn-circle collapsed" data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2">Sign in</a>
+              <a class="btn btn-default btn-outline btn-circle collapsed" data-toggle="collapse" href="#nav-collapse2" aria-expanded="false" aria-controls="nav-collapse2">로그인</a>
             </li>
             </c:if>
             <c:if test="${not empty sessionScope.loginfo}">
@@ -163,13 +184,23 @@
                 <label class="sr-only" for="Password">Password</label>
                 <input type="password" class="form-control" name="password" id="password" style="width:120px;" placeholder="Password" required />
               </div>
-              <button type="submit" class="btn btn-success">Sign in</button>
+              <button type="submit" class="btn btn-success">로그인</button>
             </form>
           </ul>
           </div>
 </nav>
 </div>
 <script type="text/javascript">
+/* 방금 전 선택한 콤보 박스를 그대로 보여 주기 */ 
+$('#mode option').each(function (index){
+	if( $(this).val() == '${requestScope.mode}' ){
+		$(this).attr('selected', 'selected') ;
+	}
+});	
+/* 이전에 넣었던 값 그대로 보존 */
+$('#keyword').val( '${requestScope.keyword}' ) ;	
+
+
 function byeMember(){
 	if(confirm("정말 탈퇴할꺼에요?ㅠㅠ")){
 	var popOptions = "dialogWidth: 300px; dialogHeight: 350px; center: yes; resizable: yes; status: no; scroll: no;";

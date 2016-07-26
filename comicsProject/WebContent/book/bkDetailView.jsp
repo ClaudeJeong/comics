@@ -57,9 +57,21 @@
 					</table>
 				</div>
 				<hr>
+				<div align="right">
+					<c:if test="${whologin == 2}">
+					<c:if test="${bean.bookstat == '대출 가능'}">
+						<a href="<%=MyCtrlCommand%>bkUpdateForm&bookcode=${bean.bookcode}">
+							수정
+						</a>
+						<a href="<%=MyCtrlCommand%>bkDelete&bookcode=${bean.bookcode}">
+							삭제
+						</a>
+					</c:if>	
+					</c:if>				
+				</div>
+					
+				<hr>
 				<div class="col-sm-offset-5 col-sm-4">
-					<button class="btn btn-default" onclick="history.back();">
-						예약 하기</button>
 					<button class="btn btn-default" onclick="history.back();">
 						돌아 가기</button>
 				</div>

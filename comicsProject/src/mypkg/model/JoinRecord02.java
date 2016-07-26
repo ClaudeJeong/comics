@@ -11,7 +11,7 @@ public class JoinRecord02 {
 	private String mid ;
 	private String lenddate ;
 	private String returndate ;
-	private String overdue ;
+	private int overdue ;
 	
 	public int getRecordnum() {
 		return recordnum;
@@ -67,10 +67,10 @@ public class JoinRecord02 {
 	public void setReturndate(String returndate) {
 		this.returndate = returndate;
 	}
-	public String getOverdue() {
+	public int getOverdue() {
 		return overdue;
 	}
-	public void setOverdue(String overdue) {
+	public void setOverdue(int overdue) {
 		this.overdue = overdue;
 	}
 	@Override

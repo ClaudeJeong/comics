@@ -54,12 +54,12 @@ public class BookDao extends SuperDao {
 		return cnt ;
 	}
 	
-	//아직 안함
+	//책 한건의 정보를 편집하기 위함
 	public int UpdateData( Book bean ){
-		System.out.println( bean.toString() ); 
+		//System.out.println( "업뎃" + bean.toString() ); 
 		String sql = "update books set " ;
 		sql += " name=?, volume=?, writer=?, publisher=?, pubdate=to_date(?, 'yyyy/MM/dd'), " ;
-		sql += " genre=?, image=?, bookstat=?, bookstory=?  " ; 
+		sql += " genre=?, image=?, bookstory=?  " ; 
 		sql += " where bookcode = ? " ;
 
 		PreparedStatement pstmt = null ;
@@ -75,9 +75,8 @@ public class BookDao extends SuperDao {
 			pstmt.setString(5, bean.getPubdate());
 			pstmt.setString(6, bean.getGenre());
 			pstmt.setString(7, bean.getImage());
-			pstmt.setString(8, bean.getBookstat());
-			pstmt.setString(9, bean.getBookstory());			
-			pstmt.setInt(10, bean.getBookcode() );
+			pstmt.setString(8, bean.getBookstory());			
+			pstmt.setInt(9, bean.getBookcode() );
 			
 			cnt = pstmt.executeUpdate() ; 
 			conn.commit(); 
@@ -101,38 +100,6 @@ public class BookDao extends SuperDao {
 		return cnt ;
 	}
 	
-	//아직 안함
-	public int DeleteData( int pmkey ){
-		String sql = " delete from books where bookcode = ? " ;
-		PreparedStatement pstmt = null ;
-		int cnt = -99999 ;
-		try {
-			if( conn == null ){ super.conn = super.getConn() ; }
-			conn.setAutoCommit( false );
-			pstmt = super.conn.prepareStatement(sql) ;
-			pstmt.setInt(1, pmkey);
-			
-			cnt = pstmt.executeUpdate() ; 
-			conn.commit(); 
-		} catch (Exception e) {
-			SQLException err = (SQLException)e ;			
-			cnt = - err.getErrorCode() ;			
-			e.printStackTrace();
-			try {
-				conn.rollback(); 
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		} finally{
-			try {
-				if( pstmt != null ){ pstmt.close(); }
-				super.closeConn(); 
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-		return cnt ;
-	}
 	public BookDao() {
 	
 	}
@@ -146,17 +113,20 @@ public class BookDao extends SuperDao {
 		String sql = "select bookcode, name, volume, writer, publisher, pubdate, genre, image, bookstat, bookstory, ranking "; 
 		sql += " from " ; 
 		sql += " ( " ;
-		sql += " select bookcode, name, volume, writer, publisher, pubdate, genre, image, bookstat, bookstory, rank() over( order by name asc ) as ranking " ;
+		sql += " select bookcode, name, volume, writer, publisher, pubdate, genre, image, bookstat, bookstory, rank() over( order by name asc, volume desc, bookcode desc) as ranking " ;
 		sql += " from books " ;
+		sql += " where bookstat != '대출 불가' " ;
 		if( mode.equals("all") == false ){
-			sql += " where lower(" + mode + ") like lower('" + keyword + "') "; //작성자 필터링 조건
+			sql += " and lower(" + mode + ") like lower('" + keyword + "') "; //작성자 필터링 조건
 		}
 		sql += " ) " ;
 		sql += " where ranking between ? and ? " ; 
 
 		List<Book> lists = new ArrayList<Book>() ;
 		try {
-			if( this.conn == null ){ this.conn = this.getConn() ; }			
+			//if( this.conn == null ){ 
+				this.conn = this.getConn() ; 
+			//}			
 			pstmt = this.conn.prepareStatement(sql) ;
 			pstmt.setInt(1, beginRow);
 			pstmt.setInt(2, endRow); 
@@ -242,8 +212,9 @@ public class BookDao extends SuperDao {
 		ResultSet rs = null ;
 		
 		String sql = "select count(*) as cnt from books";
+		sql += " where bookstat != '대출 불가' " ;
 		if( mode.equals("all") == false ){
-			sql += " where lower(" + mode + ") like lower('" + keyword + "') ";
+			sql += " and lower(" + mode + ") like lower('" + keyword + "') ";
 		}
 		
 		int cnt = 0; //없는 경우의 기본값
@@ -265,6 +236,45 @@ public class BookDao extends SuperDao {
 				this.closeConn();
 			} catch (Exception e2) {
 				e2.printStackTrace(); 
+			}
+		}
+		return cnt ;
+	}
+	
+	//한건의 책을 삭제하기위함.
+	//삭제를 해도 데이터베이스에서 삭제되는것이 아니라 대여상태가 대출 불가로 바뀜.
+	public int bookDelete(int bookcode) {
+		//System.out.println( "업뎃" + bean.toString() ); 
+		String sql = "update books set " ;
+		sql += " bookstat='대출 불가' " ; 
+		sql += " where bookcode = ? " ;
+
+		PreparedStatement pstmt = null ;
+		int cnt = -99999 ;
+		try {
+			if( conn == null ){ super.conn = super.getConn() ; }
+			conn.setAutoCommit( false );
+			pstmt = super.conn.prepareStatement(sql) ;
+						
+			pstmt.setInt(1, bookcode );
+			
+			cnt = pstmt.executeUpdate() ; 
+			conn.commit(); 
+		} catch (Exception e) {
+			SQLException err = (SQLException)e ;			
+			cnt = - err.getErrorCode() ;			
+			e.printStackTrace();
+			try {
+				conn.rollback(); 
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		} finally{
+			try {
+				if( pstmt != null ){ pstmt.close(); }
+				super.closeConn(); 
+			} catch (Exception e2) {
+				e2.printStackTrace();
 			}
 		}
 		return cnt ;

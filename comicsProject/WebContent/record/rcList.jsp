@@ -46,8 +46,8 @@
 									<select class="form-control" name="mode" id="mode">
 										<option value="all" selected="selected">-- 검색---------
 										<option value="name">책 제목
-										<option value="company">닉네임
-										<option value="category">아이디					
+										<option value="nickname">닉네임
+										<option value="mid">아이디					
 									</select>
 								</div>
 								<div class="form-group">
