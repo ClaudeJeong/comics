@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import mypkg.model.JoinRecord02;
 import mypkg.model.RecordDao;
+import mypkg.util.FlowParameters;
 import mypkg.util.Paging;
 public class RecordPersonalHistoryController implements SuperController{
 	@Override
@@ -33,6 +34,12 @@ public class RecordPersonalHistoryController implements SuperController{
 		String pageNumber = request.getParameter("pageNumber");
 		String pageSize = request.getParameter("pageSize");
 
+		FlowParameters parameters = new FlowParameters();
+		parameters.setKeyword(keyword);
+		parameters.setMode(mode);
+		parameters.setPageNumber(pageNumber);
+		parameters.setPageSize(pageSize);
+		
 		int totalCount = rcdao.selectTotalCount("records", mid, mode, "%" + keyword + "%");
 		System.out.println("ÅäÅ» Ä«¿îÅÍ : " + totalCount);
 		
@@ -40,15 +47,19 @@ public class RecordPersonalHistoryController implements SuperController{
 		String myurl =  contextPath + "/ComicsCtrl?command=rcPersonalHistory";
 		
 		
-		Paging pageInfo = new Paging(pageNumber, pageSize, totalCount, myurl, mode, keyword);
+		Paging pageInfo = new Paging(pageNumber, pageSize, totalCount, myurl, mid, mode, keyword);
 		
 		List<JoinRecord02> lists = rcdao.SelectDataHistory(mid, pageInfo.getBeginRow(), pageInfo.getEndRow(), mode, "%" + keyword + "%");
 		
 		request.setAttribute("lists", lists);
 		request.setAttribute("pagingHtml", pageInfo.getPagingHtml());
 		request.setAttribute("pagingStatus", pageInfo.getPagingStatus());
+		request.setAttribute("mode", mode);
+		request.setAttribute("keyword", keyword);
+		request.setAttribute("parameters", parameters.toString());
 		
-		String url = "/record/rcPersonalHistory.jsp";
+		
+		String url = "/record/rcPersonalHistory.jsp?" + parameters.toString();
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}

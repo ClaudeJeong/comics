@@ -78,7 +78,7 @@ function selfClose() {
 											<input type="text" hidden="hidden" name="mid" value="${param.mid}" >
 										</div>
 										<button type="submit" class="btn btn-xs btn-default" onclick="selfClose()">대여</button>
-										</form>									
+										</form>							
 									</c:if>
 								</td>
 							</tr>

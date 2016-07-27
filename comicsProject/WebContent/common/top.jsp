@@ -63,8 +63,8 @@
 		<form class="form-inline" role="form" name="myform" action="<%=MyCtrlCommand%>bkList" method="post">
 			<div class="form-group">
 				<select class="form-control" name="mode2" id="mode2">
-					<option value="all" selected="selected">---검색---
-					<option value="name">책 제목
+					<option value="all">---검색---
+					<option value="name" selected="selected">책 제목
 					<option value="writer">작가
 					<option value="publisher">출판사						
 				</select>
